@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Logo } from './Logo';
@@ -129,11 +128,19 @@ const PrimaryNav: React.FC = () => {
             >
               Apply Now
             </Link>
+            <a 
+              href="https://schoolguardian360.com/#Dashboard"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full text-center py-4 bg-gold-500 text-white text-sm font-bold uppercase tracking-widest hover:bg-gold-600 transition-colors rounded-sm shadow-sm"
+            >
+              Guardian 360 Login
+            </a>
             <Link 
               to="/admin/login" 
-              className="block w-full text-center py-4 bg-white border border-gray-300 text-gray-700 text-sm font-bold uppercase tracking-widest hover:bg-gray-100 transition-colors rounded-sm"
+              className="block w-full text-center py-4 bg-white border border-gray-300 text-gray-400 text-xs font-bold uppercase tracking-widest hover:bg-gray-50 transition-colors rounded-sm"
             >
-              Faculty Login
+              Website Admin
             </Link>
           </div>
         </div>
