@@ -7,8 +7,10 @@ export const PageModel = {
       SELECT 
         id, slug, title, 
         seo_title as "seoTitle", 
-        seo_description as "seoDescription", 
-        is_home_page as "isHomePage", 
+        seo_description as "seoDescription",
+        track_type as "trackType",
+        is_home_page as "isHomePage",
+        is_published as "isPublished",
         created_at as "createdAt", 
         updated_at as "updatedAt"
       FROM pages
@@ -23,8 +25,10 @@ export const PageModel = {
       SELECT 
         id, slug, title, 
         seo_title as "seoTitle", 
-        seo_description as "seoDescription", 
-        is_home_page as "isHomePage", 
+        seo_description as "seoDescription",
+        track_type as "trackType",
+        is_home_page as "isHomePage",
+        is_published as "isPublished",
         created_at as "createdAt", 
         updated_at as "updatedAt"
       FROM pages
@@ -39,8 +43,10 @@ export const PageModel = {
       SELECT 
         id, slug, title, 
         seo_title as "seoTitle", 
-        seo_description as "seoDescription", 
-        is_home_page as "isHomePage", 
+        seo_description as "seoDescription",
+        track_type as "trackType",
+        is_home_page as "isHomePage",
+        is_published as "isPublished",
         created_at as "createdAt", 
         updated_at as "updatedAt"
       FROM pages
@@ -52,13 +58,15 @@ export const PageModel = {
 
   async create(data: CreatePageDTO): Promise<Page> {
     const text = `
-      INSERT INTO pages (slug, title, seo_title, seo_description, is_home_page)
-      VALUES ($1, $2, $3, $4, $5)
+      INSERT INTO pages (slug, title, seo_title, seo_description, track_type, is_home_page, is_published)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING 
         id, slug, title, 
         seo_title as "seoTitle", 
-        seo_description as "seoDescription", 
-        is_home_page as "isHomePage", 
+        seo_description as "seoDescription",
+        track_type as "trackType",
+        is_home_page as "isHomePage",
+        is_published as "isPublished",
         created_at as "createdAt", 
         updated_at as "updatedAt"
     `;
@@ -66,8 +74,10 @@ export const PageModel = {
       data.slug, 
       data.title, 
       data.seoTitle || null, 
-      data.seoDescription || null, 
-      data.isHomePage || false
+      data.seoDescription || null,
+      data.trackType || 'general',
+      data.isHomePage || false,
+      data.isPublished ?? true
     ];
     const res = await query(text, values);
     return res.rows[0];
@@ -82,7 +92,9 @@ export const PageModel = {
     if (data.title !== undefined) { fields.push(`title = $${idx++}`); values.push(data.title); }
     if (data.seoTitle !== undefined) { fields.push(`seo_title = $${idx++}`); values.push(data.seoTitle); }
     if (data.seoDescription !== undefined) { fields.push(`seo_description = $${idx++}`); values.push(data.seoDescription); }
+    if (data.trackType !== undefined) { fields.push(`track_type = $${idx++}`); values.push(data.trackType); }
     if (data.isHomePage !== undefined) { fields.push(`is_home_page = $${idx++}`); values.push(data.isHomePage); }
+    if (data.isPublished !== undefined) { fields.push(`is_published = $${idx++}`); values.push(data.isPublished); }
 
     if (fields.length === 0) return this.findById(id);
 
@@ -94,8 +106,10 @@ export const PageModel = {
       RETURNING 
         id, slug, title, 
         seo_title as "seoTitle", 
-        seo_description as "seoDescription", 
-        is_home_page as "isHomePage", 
+        seo_description as "seoDescription",
+        track_type as "trackType",
+        is_home_page as "isHomePage",
+        is_published as "isPublished",
         created_at as "createdAt", 
         updated_at as "updatedAt"
     `;

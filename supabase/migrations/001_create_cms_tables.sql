@@ -1,5 +1,3 @@
--- Database schema for UPSS Website CMS
-
 -- Create pages table
 CREATE TABLE IF NOT EXISTS pages (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
