@@ -23,10 +23,10 @@ const AdminLayout: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex font-sans">
       {/* Sidebar */}
-      <aside className="w-64 bg-gray-900 text-gray-300 flex-shrink-0 flex flex-col shadow-xl z-20 hidden md:flex">
+      <aside className="w-64 admin-sidebar flex-shrink-0 flex flex-col shadow-xl z-20 hidden md:flex">
         {/* Sidebar Header */}
-        <div className="h-16 flex items-center px-6 bg-gray-950 border-b border-gray-800">
-          <div className="w-8 h-8 bg-maroon-800 text-white flex items-center justify-center rounded-sm mr-3 font-serif font-bold">U</div>
+        <div className="h-16 flex items-center px-6 bg-primary-950 border-b border-primary-800">
+          <div className="w-8 h-8 bg-primary-800 text-white flex items-center justify-center rounded-sm mr-3 font-serif font-bold">U</div>
           <div>
             <div className="font-bold text-white tracking-wide text-sm">UPSS Builder</div>
             <div className="text-[10px] uppercase tracking-wider text-gray-500">Admin Console</div>
@@ -39,8 +39,8 @@ const AdminLayout: React.FC = () => {
             to="/admin"
             className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
               isActive('/admin')
-                ? 'bg-maroon-900/50 text-white border-l-4 border-maroon-500' 
-                : 'hover:bg-gray-800 hover:text-white border-l-4 border-transparent'
+                ? 'bg-primary-800 text-white border-l-4 border-primary-500' 
+                : 'hover:bg-primary-800 hover:text-white border-l-4 border-transparent'
             }`}
           >
             <svg className="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,8 +57,8 @@ const AdminLayout: React.FC = () => {
             to="/admin/pages"
             className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
               isActive('/admin/pages')
-                ? 'bg-maroon-900/50 text-white border-l-4 border-maroon-500' 
-                : 'hover:bg-gray-800 hover:text-white border-l-4 border-transparent'
+                ? 'bg-primary-800 text-white border-l-4 border-primary-500' 
+                : 'hover:bg-primary-800 hover:text-white border-l-4 border-transparent'
             }`}
           >
             <svg className="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -71,8 +71,8 @@ const AdminLayout: React.FC = () => {
             to="/admin/news"
             className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
               isActive('/admin/news')
-                ? 'bg-maroon-900/50 text-white border-l-4 border-maroon-500' 
-                : 'hover:bg-gray-800 hover:text-white border-l-4 border-transparent'
+                ? 'bg-primary-800 text-white border-l-4 border-primary-500' 
+                : 'hover:bg-primary-800 hover:text-white border-l-4 border-transparent'
             }`}
           >
             <svg className="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -85,8 +85,8 @@ const AdminLayout: React.FC = () => {
             to="/admin/media"
             className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
               isActive('/admin/media')
-                ? 'bg-maroon-900/50 text-white border-l-4 border-maroon-500' 
-                : 'hover:bg-gray-800 hover:text-white border-l-4 border-transparent'
+                ? 'bg-primary-800 text-white border-l-4 border-primary-500' 
+                : 'hover:bg-primary-800 hover:text-white border-l-4 border-transparent'
             }`}
           >
             <svg className="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,8 +103,8 @@ const AdminLayout: React.FC = () => {
             to="/admin/settings"
             className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
               isActive('/admin/settings')
-                ? 'bg-maroon-900/50 text-white border-l-4 border-maroon-500' 
-                : 'hover:bg-gray-800 hover:text-white border-l-4 border-transparent'
+                ? 'bg-primary-800 text-white border-l-4 border-primary-500' 
+                : 'hover:bg-primary-800 hover:text-white border-l-4 border-transparent'
             }`}
           >
              <svg className="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -116,8 +116,8 @@ const AdminLayout: React.FC = () => {
             to="/admin/users"
             className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
               isActive('/admin/users')
-                ? 'bg-maroon-900/50 text-white border-l-4 border-maroon-500' 
-                : 'hover:bg-gray-800 hover:text-white border-l-4 border-transparent'
+                ? 'bg-primary-800 text-white border-l-4 border-primary-500' 
+                : 'hover:bg-primary-800 hover:text-white border-l-4 border-transparent'
             }`}
           >
              <svg className="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -128,19 +128,19 @@ const AdminLayout: React.FC = () => {
         </nav>
 
         {/* User Footer */}
-        <div className="p-4 border-t border-gray-800">
+        <div className="p-4 border-t border-primary-800">
            <div className="flex items-center gap-3 mb-4 px-2">
-             <div className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-xs text-white font-bold">
+             <div className="w-8 h-8 rounded-full bg-primary-700 flex items-center justify-center text-xs text-white font-bold">
                {user?.email?.charAt(0).toUpperCase() || 'A'}
              </div>
              <div className="overflow-hidden">
                <p className="text-sm font-medium text-white truncate">Administrator</p>
-               <p className="text-xs text-gray-500 truncate">{user?.email || 'admin@upss.edu.ng'}</p>
+               <p className="text-xs text-gray-400 truncate">{user?.email || 'admin@upss.edu.ng'}</p>
              </div>
            </div>
           <button 
             onClick={handleLogout}
-            className="flex items-center justify-center gap-2 w-full px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs font-bold uppercase tracking-wider rounded transition-colors"
+            className="flex items-center justify-center gap-2 w-full px-4 py-2 bg-primary-800 hover:bg-primary-700 text-gray-300 text-xs font-bold uppercase tracking-wider rounded transition-colors"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
             Sign Out
@@ -151,7 +151,7 @@ const AdminLayout: React.FC = () => {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col overflow-hidden relative">
         {/* Top Header */}
-        <header className="h-16 bg-white border-b border-gray-200 shadow-sm flex items-center justify-between px-6 md:px-10">
+        <header className="h-16 admin-header flex items-center justify-between px-6 md:px-10">
            <div className="flex items-center gap-4">
              {/* Mobile Menu Button */}
              <button className="md:hidden text-gray-600">
@@ -167,7 +167,7 @@ const AdminLayout: React.FC = () => {
              </h1>
            </div>
            <div className="flex gap-4">
-             <Link to="/" target="_blank" className="text-sm text-maroon-800 hover:underline flex items-center gap-1">
+             <Link to="/" target="_blank" className="text-sm link flex items-center gap-1">
                View Live Site
                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
              </Link>
