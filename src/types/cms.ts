@@ -1,10 +1,12 @@
+export type TrackType = 'general' | 'foundation' | 'science' | 'humanities' | 'business';
+
 export interface Page {
   id: string;
   slug: string;
   title: string;
   seoTitle: string;
   seoDescription: string;
-  trackType?: string;
+  trackType?: TrackType;
   isHomePage: boolean;
   isPublished?: boolean;
   createdAt: string;
