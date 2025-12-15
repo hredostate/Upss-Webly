@@ -11,11 +11,11 @@ export const FeatureListSection: React.FC<{ section: Section }> = ({ section }) 
   }
 
   return (
-    <section ref={ref} className="py-24 md:py-36 bg-white" aria-label={section.title || "Features"}>
+    <section ref={ref} className="section bg-white" aria-label={section.title || "Features"}>
       <div className="max-w-5xl mx-auto px-6">
         {section.title && (
           <div className={`mb-16 md:mb-20 text-center reveal ${isVisible ? 'active' : ''}`}>
-            <h2 className="font-serif text-4xl md:text-5xl text-gray-900 mb-6">{section.title}</h2>
+            <h2 className="heading-2 mb-6">{section.title}</h2>
             {section.subtitle && <p className="text-xl text-gray-600 font-light leading-relaxed max-w-3xl mx-auto">{section.subtitle}</p>}
           </div>
         )}

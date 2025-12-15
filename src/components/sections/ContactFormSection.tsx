@@ -30,7 +30,7 @@ export const ContactFormSection: React.FC<{ section: Section }> = ({ section }) 
   };
 
   return (
-    <section ref={ref} className="py-24 md:py-36 bg-white" aria-label={section.title || "Contact Form"}>
+    <section ref={ref} className="section bg-white" aria-label={section.title || "Contact Form"}>
       <div className="max-w-3xl mx-auto px-6">
         {section.title && (
           <div className={`mb-12 text-center reveal ${isVisible ? 'active' : ''}`}>

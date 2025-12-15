@@ -43,11 +43,11 @@ export const ValueColumnsSection: React.FC<{ section: Section }> = ({ section })
 
   // Default variant (3 Text Columns)
   return (
-    <section ref={ref} className="py-24 md:py-36 bg-white" aria-label={section.title || "Our Values"}>
-      <div className="max-w-7xl mx-auto px-6">
+    <section ref={ref} className="section bg-white" aria-label={section.title || "Our Values"}>
+      <div className="container-wide">
         {section.title && (
           <div className={`mb-20 md:mb-24 max-w-3xl reveal ${isVisible ? 'active' : ''}`}>
-            <h2 className="font-serif text-4xl md:text-5xl text-gray-900 mb-6">{section.title}</h2>
+            <h2 className="heading-2 mb-6">{section.title}</h2>
             {section.subtitle && <p className="text-xl text-gray-500 font-light leading-relaxed">{section.subtitle}</p>}
           </div>
         )}

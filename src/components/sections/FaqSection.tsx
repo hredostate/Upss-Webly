@@ -21,11 +21,11 @@ export const FaqSection: React.FC<{ section: Section }> = ({ section }) => {
   };
 
   return (
-    <section ref={ref} className="py-24 md:py-36 bg-gray-50" aria-label={section.title || "FAQ"}>
-      <div className="max-w-4xl mx-auto px-6">
+    <section ref={ref} className="section bg-gray-50" aria-label={section.title || "FAQ"}>
+      <div className="container-narrow">
         {section.title && (
-          <div className={`mb-16 md:mb-20 text-center reveal ${isVisible ? 'active' : ''}`}>
-            <h2 className="font-serif text-4xl md:text-5xl text-gray-900 mb-6">{section.title}</h2>
+          <div className={`section-header reveal ${isVisible ? 'active' : ''}`}>
+            <h2 className="heading-2 mb-6">{section.title}</h2>
             {section.subtitle && <p className="text-xl text-gray-600 font-light leading-relaxed">{section.subtitle}</p>}
           </div>
         )}

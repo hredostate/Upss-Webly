@@ -7,7 +7,7 @@ export const SignatureBlockSection: React.FC<{ section: Section }> = ({ section 
   const { ref, isVisible } = useReveal(0.1);
 
   return (
-    <section ref={ref} className="py-24 md:py-36 bg-gray-50" aria-label={section.title || "Message"}>
+    <section ref={ref} className="section bg-gray-50" aria-label={section.title || "Message"}>
       <div className="max-w-4xl mx-auto px-6">
         <div className={`bg-white p-10 md:p-16 shadow-lg rounded-sm reveal ${isVisible ? 'active' : ''}`}>
           {section.title && (
