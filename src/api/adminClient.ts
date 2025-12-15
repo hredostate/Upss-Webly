@@ -1,193 +1,150 @@
-
-import { ApiResponse, Page, Section, NewsItem } from '../types';
-
-const API_BASE = 'http://localhost:3001/api';
+import { supabase } from '../lib/supabase';
+import { Page, Section, NewsItem } from '../types';
 
 export const AdminClient = {
-  login: async (email: string, password: string) => {
-    const response = await fetch(`${API_BASE}/admin/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
-    
-    const result: ApiResponse<{ token: string; user: any }> = await response.json();
-    
-    if (result.error) {
-      throw new Error(result.error);
-    }
-    
-    return result.data;
-  },
-
-  // Helper to get headers with token
-  authHeaders: () => {
-    const token = localStorage.getItem('upss_auth_token');
-    return {
-      'Content-Type': 'application/json',
-      'x-admin-token': token || ''
-    };
-  },
-
   // --- Page CRUD ---
-
   getPages: async (): Promise<Page[]> => {
-    const response = await fetch(`${API_BASE}/pages`, {
-      headers: AdminClient.authHeaders()
-    });
-    const result: ApiResponse<Page[]> = await response.json();
-    if (result.error) throw new Error(result.error);
-    return result.data || [];
+    const { data, error } = await supabase
+      .from('pages')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (error) throw new Error(error.message);
+    return data || [];
   },
 
   getPage: async (id: string): Promise<Page> => {
-    const response = await fetch(`${API_BASE}/pages/${id}`, {
-      headers: AdminClient.authHeaders()
-    });
-    const result: ApiResponse<Page> = await response.json();
-    if (result.error) throw new Error(result.error);
-    if (!result.data) throw new Error('Page not found');
-    return result.data;
+    const { data, error } = await supabase
+      .from('pages')
+      .select('*')
+      .eq('id', id)
+      .single();
+    if (error) throw new Error(error.message);
+    return data;
   },
 
-  createPage: async (data: Partial<Page>): Promise<Page> => {
-    const response = await fetch(`${API_BASE}/pages`, {
-      method: 'POST',
-      headers: AdminClient.authHeaders(),
-      body: JSON.stringify(data)
-    });
-    const result: ApiResponse<Page> = await response.json();
-    if (result.error) throw new Error(result.error);
-    if (!result.data) throw new Error('Failed to create page');
-    return result.data;
+  createPage: async (pageData: Partial<Page>): Promise<Page> => {
+    const { data, error } = await supabase
+      .from('pages')
+      .insert([pageData])
+      .select()
+      .single();
+    if (error) throw new Error(error.message);
+    return data;
   },
 
-  updatePage: async (id: string, data: Partial<Page>): Promise<Page> => {
-    const response = await fetch(`${API_BASE}/pages/${id}`, {
-      method: 'PUT',
-      headers: AdminClient.authHeaders(),
-      body: JSON.stringify(data)
-    });
-    const result: ApiResponse<Page> = await response.json();
-    if (result.error) throw new Error(result.error);
-    if (!result.data) throw new Error('Failed to update page');
-    return result.data;
+  updatePage: async (id: string, pageData: Partial<Page>): Promise<Page> => {
+    const { data, error } = await supabase
+      .from('pages')
+      .update(pageData)
+      .eq('id', id)
+      .select()
+      .single();
+    if (error) throw new Error(error.message);
+    return data;
   },
 
   deletePage: async (id: string): Promise<void> => {
-    const response = await fetch(`${API_BASE}/pages/${id}`, {
-      method: 'DELETE',
-      headers: AdminClient.authHeaders()
-    });
-    const result: ApiResponse<void> = await response.json();
-    if (result.error) throw new Error(result.error);
+    const { error } = await supabase.from('pages').delete().eq('id', id);
+    if (error) throw new Error(error.message);
   },
 
   // --- Section CRUD ---
-
   getSections: async (pageId: string): Promise<Section[]> => {
-    const response = await fetch(`${API_BASE}/pages/${pageId}/sections`, {
-      headers: AdminClient.authHeaders()
-    });
-    const result: ApiResponse<Section[]> = await response.json();
-    if (result.error) throw new Error(result.error);
-    return result.data || [];
+    const { data, error } = await supabase
+      .from('sections')
+      .select('*')
+      .eq('page_id', pageId)
+      .order('section_order', { ascending: true });
+    if (error) throw new Error(error.message);
+    return data || [];
   },
 
-  createSection: async (pageId: string, data: Partial<Section>): Promise<Section> => {
-    const response = await fetch(`${API_BASE}/pages/${pageId}/sections`, {
-      method: 'POST',
-      headers: AdminClient.authHeaders(),
-      body: JSON.stringify(data)
-    });
-    const result: ApiResponse<Section> = await response.json();
-    if (result.error) throw new Error(result.error);
-    if (!result.data) throw new Error('Failed to create section');
-    return result.data;
+  createSection: async (pageId: string, sectionData: Partial<Section>): Promise<Section> => {
+    const { data, error } = await supabase
+      .from('sections')
+      .insert([{ ...sectionData, page_id: pageId }])
+      .select()
+      .single();
+    if (error) throw new Error(error.message);
+    return data;
   },
 
-  updateSection: async (id: string, data: Partial<Section>): Promise<Section> => {
-    const response = await fetch(`${API_BASE}/sections/${id}`, {
-      method: 'PUT',
-      headers: AdminClient.authHeaders(),
-      body: JSON.stringify(data)
-    });
-    const result: ApiResponse<Section> = await response.json();
-    if (result.error) throw new Error(result.error);
-    if (!result.data) throw new Error('Failed to update section');
-    return result.data;
+  updateSection: async (id: string, sectionData: Partial<Section>): Promise<Section> => {
+    const { data, error } = await supabase
+      .from('sections')
+      .update(sectionData)
+      .eq('id', id)
+      .select()
+      .single();
+    if (error) throw new Error(error.message);
+    return data;
   },
 
   deleteSection: async (id: string): Promise<void> => {
-    const response = await fetch(`${API_BASE}/sections/${id}`, {
-      method: 'DELETE',
-      headers: AdminClient.authHeaders()
-    });
-    const result: ApiResponse<void> = await response.json();
-    if (result.error) throw new Error(result.error);
+    const { error } = await supabase.from('sections').delete().eq('id', id);
+    if (error) throw new Error(error.message);
   },
 
   reorderSections: async (orderedIds: string[]): Promise<void> => {
-    const response = await fetch(`${API_BASE}/sections/reorder`, {
-      method: 'PATCH',
-      headers: AdminClient.authHeaders(),
-      body: JSON.stringify({ orderedIds })
-    });
-    const result: ApiResponse<void> = await response.json();
-    if (result.error) throw new Error(result.error);
+    const updates = orderedIds.map((id, index) =>
+      supabase.from('sections').update({ section_order: index }).eq('id', id)
+    );
+    await Promise.all(updates);
   },
 
   // --- News CRUD ---
-  
   getNews: async (): Promise<NewsItem[]> => {
-    const response = await fetch(`${API_BASE}/news`, {
-      headers: AdminClient.authHeaders() // Using auth headers for admin, though public also works
-    });
-    const result: ApiResponse<NewsItem[]> = await response.json();
-    if (result.error) throw new Error(result.error);
-    return result.data || [];
+    const { data, error } = await supabase
+      .from('news')
+      .select('*')
+      .order('published_date', { ascending: false });
+    if (error) throw new Error(error.message);
+    return data || [];
   },
 
   getNewsItem: async (id: string): Promise<NewsItem> => {
-    const response = await fetch(`${API_BASE}/news/${id}`, {
-      headers: AdminClient.authHeaders()
-    });
-    const result: ApiResponse<NewsItem> = await response.json();
-    if (result.error) throw new Error(result.error);
-    if (!result.data) throw new Error('News item not found');
-    return result.data;
+    const { data, error } = await supabase
+      .from('news')
+      .select('*')
+      .eq('id', id)
+      .single();
+    if (error) throw new Error(error.message);
+    return data;
   },
 
-  createNewsItem: async (data: Partial<NewsItem>): Promise<NewsItem> => {
-    const response = await fetch(`${API_BASE}/news`, {
-      method: 'POST',
-      headers: AdminClient.authHeaders(),
-      body: JSON.stringify(data)
-    });
-    const result: ApiResponse<NewsItem> = await response.json();
-    if (result.error) throw new Error(result.error);
-    if (!result.data) throw new Error('Failed to create news item');
-    return result.data;
+  createNewsItem: async (newsData: Partial<NewsItem>): Promise<NewsItem> => {
+    const { data, error } = await supabase
+      .from('news')
+      .insert([newsData])
+      .select()
+      .single();
+    if (error) throw new Error(error.message);
+    return data;
   },
 
-  updateNewsItem: async (id: string, data: Partial<NewsItem>): Promise<NewsItem> => {
-    const response = await fetch(`${API_BASE}/news/${id}`, {
-      method: 'PUT',
-      headers: AdminClient.authHeaders(),
-      body: JSON.stringify(data)
-    });
-    const result: ApiResponse<NewsItem> = await response.json();
-    if (result.error) throw new Error(result.error);
-    if (!result.data) throw new Error('Failed to update news item');
-    return result.data;
+  updateNewsItem: async (id: string, newsData: Partial<NewsItem>): Promise<NewsItem> => {
+    const { data, error } = await supabase
+      .from('news')
+      .update(newsData)
+      .eq('id', id)
+      .select()
+      .single();
+    if (error) throw new Error(error.message);
+    return data;
   },
 
   deleteNewsItem: async (id: string): Promise<void> => {
-    const response = await fetch(`${API_BASE}/news/${id}`, {
-      method: 'DELETE',
-      headers: AdminClient.authHeaders()
-    });
-    const result: ApiResponse<void> = await response.json();
-    if (result.error) throw new Error(result.error);
-  }
+    const { error } = await supabase.from('news').delete().eq('id', id);
+    if (error) throw new Error(error.message);
+  },
+
+  // --- Media ---
+  getMedia: async (): Promise<any[]> => {
+    const { data, error } = await supabase
+      .from('media')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (error) throw new Error(error.message);
+    return data || [];
+  },
 };
