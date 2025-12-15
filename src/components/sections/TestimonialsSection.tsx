@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { Section } from '../../types';
 import { useReveal } from '../../hooks/useReveal';
 
+interface Testimonial {
+  quote: string;
+  author: string;
+  role?: string;
+}
+
 export const TestimonialsSection: React.FC<{ section: Section }> = ({ section }) => {
   const { testimonials, layout = 'grid' } = section.contentJson || {};
   const { ref, isVisible } = useReveal(0.1);
@@ -21,7 +27,7 @@ export const TestimonialsSection: React.FC<{ section: Section }> = ({ section })
 
   // Carousel layout
   if (layout === 'carousel') {
-    const current = testimonials[currentIndex];
+    const current = (testimonials as Testimonial[])[currentIndex];
     return (
       <section ref={ref} className="py-24 md:py-36 bg-maroon-900 text-white" aria-label={section.title || "Testimonials"}>
         <div className="max-w-5xl mx-auto px-6">
@@ -56,7 +62,7 @@ export const TestimonialsSection: React.FC<{ section: Section }> = ({ section })
                 </svg>
               </button>
               <div className="flex gap-2">
-                {testimonials.map((_: any, idx: number) => (
+                {testimonials.map((_: Testimonial, idx: number) => (
                   <button
                     key={idx}
                     onClick={() => setCurrentIndex(idx)}
@@ -93,7 +99,7 @@ export const TestimonialsSection: React.FC<{ section: Section }> = ({ section })
         )}
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((testimonial: any, idx: number) => (
+          {(testimonials as Testimonial[]).map((testimonial, idx) => (
             <div 
               key={idx} 
               className={`bg-white p-8 rounded-lg shadow-sm reveal stagger-${(idx % 3) + 1} ${isVisible ? 'active' : ''}`}

@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { Section } from '../../types';
 import { useReveal } from '../../hooks/useReveal';
 
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
 export const FaqSection: React.FC<{ section: Section }> = ({ section }) => {
   const { faqs } = section.contentJson || {};
   const { ref, isVisible } = useReveal(0.1);
@@ -26,7 +31,7 @@ export const FaqSection: React.FC<{ section: Section }> = ({ section }) => {
         )}
         
         <div className="space-y-4">
-          {faqs.map((faq: any, idx: number) => (
+          {(faqs as FaqItem[]).map((faq, idx) => (
             <div 
               key={idx}
               className={`bg-white rounded-lg shadow-sm overflow-hidden reveal stagger-${(idx % 3) + 1} ${isVisible ? 'active' : ''}`}

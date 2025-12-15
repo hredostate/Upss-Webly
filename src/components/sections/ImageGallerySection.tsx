@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { Section } from '../../types';
 import { useReveal } from '../../hooks/useReveal';
 
+interface GalleryImage {
+  url: string;
+  caption?: string;
+}
+
 export const ImageGallerySection: React.FC<{ section: Section }> = ({ section }) => {
   const { images } = section.contentJson || {};
   const { ref, isVisible } = useReveal(0.1);
@@ -23,17 +28,17 @@ export const ImageGallerySection: React.FC<{ section: Section }> = ({ section })
           )}
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {images.map((img: any, idx: number) => (
+            {(images as GalleryImage[]).map((img, idx) => (
               <div 
                 key={idx} 
                 className={`group relative overflow-hidden rounded-lg cursor-pointer reveal stagger-${(idx % 3) + 1} ${isVisible ? 'active' : ''}`}
                 onClick={() => setLightboxImage(img.url)}
               >
-                <div className="aspect-w-16 aspect-h-12 bg-gray-200">
+                <div className="relative w-full" style={{ aspectRatio: '16 / 12' }}>
                   <img 
                     src={img.url} 
                     alt={img.caption || `Gallery image ${idx + 1}`}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                 </div>
                 {img.caption && (

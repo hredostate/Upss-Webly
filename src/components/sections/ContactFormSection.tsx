@@ -20,7 +20,7 @@ export const ContactFormSection: React.FC<{ section: Section }> = ({ section }) 
     // Simulate form submission
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    console.log('Form submitted:', formData);
+    // TODO: Implement actual form submission
     setSubmitted(true);
     setIsSubmitting(false);
     setFormData({});
