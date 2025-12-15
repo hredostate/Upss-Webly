@@ -29,10 +29,10 @@ export const TestimonialsSection: React.FC<{ section: Section }> = ({ section })
   if (layout === 'carousel') {
     const current = (testimonials as Testimonial[])[currentIndex];
     return (
-      <section ref={ref} className="py-24 md:py-36 bg-maroon-900 text-white" aria-label={section.title || "Testimonials"}>
+      <section ref={ref} className="section bg-primary-900 text-white" aria-label={section.title || "Testimonials"}>
         <div className="max-w-5xl mx-auto px-6">
           {section.title && (
-            <h2 className={`font-serif text-4xl md:text-5xl text-center mb-16 reveal ${isVisible ? 'active' : ''}`}>
+            <h2 className={`heading-2 text-center mb-16 text-white reveal ${isVisible ? 'active' : ''}`}>
               {section.title}
             </h2>
           )}
@@ -89,7 +89,7 @@ export const TestimonialsSection: React.FC<{ section: Section }> = ({ section })
 
   // Grid layout (default)
   return (
-    <section ref={ref} className="py-24 md:py-36 bg-gray-50" aria-label={section.title || "Testimonials"}>
+    <section ref={ref} className="section bg-gray-50" aria-label={section.title || "Testimonials"}>
       <div className="max-w-7xl mx-auto px-6">
         {section.title && (
           <div className={`mb-16 md:mb-20 text-center reveal ${isVisible ? 'active' : ''}`}>

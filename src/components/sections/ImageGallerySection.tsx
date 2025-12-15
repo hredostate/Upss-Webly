@@ -18,7 +18,7 @@ export const ImageGallerySection: React.FC<{ section: Section }> = ({ section })
 
   return (
     <>
-      <section ref={ref} className="py-24 md:py-36 bg-white" aria-label={section.title || "Gallery"}>
+      <section ref={ref} className="section bg-white" aria-label={section.title || "Gallery"}>
         <div className="max-w-7xl mx-auto px-6">
           {section.title && (
             <div className={`mb-16 md:mb-20 text-center reveal ${isVisible ? 'active' : ''}`}>

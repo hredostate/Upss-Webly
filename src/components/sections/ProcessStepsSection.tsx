@@ -11,11 +11,11 @@ export const ProcessStepsSection: React.FC<{ section: Section }> = ({ section })
   }
 
   return (
-    <section ref={ref} className="py-24 md:py-36 bg-gray-50" aria-label={section.title || "Process Steps"}>
-      <div className="max-w-7xl mx-auto px-6">
+    <section ref={ref} className="section bg-gray-50" aria-label={section.title || "Process Steps"}>
+      <div className="container-wide">
         {section.title && (
           <div className={`mb-20 md:mb-24 max-w-3xl mx-auto text-center reveal ${isVisible ? 'active' : ''}`}>
-            <h2 className="font-serif text-4xl md:text-5xl text-gray-900 mb-6">{section.title}</h2>
+            <h2 className="heading-2 mb-6">{section.title}</h2>
             {section.subtitle && <p className="text-xl text-gray-600 font-light leading-relaxed">{section.subtitle}</p>}
           </div>
         )}

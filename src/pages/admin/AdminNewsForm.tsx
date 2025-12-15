@@ -189,7 +189,7 @@ export default function AdminNewsForm() {
            <button 
               type="submit" 
               disabled={loading}
-              className="px-6 py-2 bg-maroon-800 text-white rounded hover:bg-maroon-900 disabled:opacity-50 font-bold uppercase tracking-wider text-sm"
+              className="btn-primary disabled:opacity-50"
            >
               {loading ? 'Saving...' : 'Save Article'}
            </button>

@@ -30,7 +30,7 @@ export const ContactFormSection: React.FC<{ section: Section }> = ({ section }) 
   };
 
   return (
-    <section ref={ref} className="py-24 md:py-36 bg-white" aria-label={section.title || "Contact Form"}>
+    <section ref={ref} className="section bg-white" aria-label={section.title || "Contact Form"}>
       <div className="max-w-3xl mx-auto px-6">
         {section.title && (
           <div className={`mb-12 text-center reveal ${isVisible ? 'active' : ''}`}>
@@ -146,7 +146,7 @@ export const ContactFormSection: React.FC<{ section: Section }> = ({ section }) 
             <button
               type="submit"
               disabled={isSubmitting}
-              className="mt-8 w-full bg-maroon-800 text-white px-8 py-4 font-bold uppercase tracking-wider hover:bg-maroon-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300"
+              className="btn-primary mt-8 w-full disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? 'Sending...' : 'Send Message'}
             </button>

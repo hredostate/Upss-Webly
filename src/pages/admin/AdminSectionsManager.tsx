@@ -139,7 +139,7 @@ export default function AdminSectionsManager() {
          </div>
          <button 
            onClick={handleAddClick}
-           className="bg-maroon-800 text-white px-5 py-2.5 rounded shadow-sm hover:bg-maroon-900 font-bold uppercase tracking-wide text-xs flex items-center gap-2"
+           className="btn-primary flex items-center gap-2"
          >
            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
            + Add New Section
@@ -188,7 +188,7 @@ export default function AdminSectionsManager() {
                 <h3 className="mt-2 text-sm font-medium text-gray-900">This page is currently empty.</h3>
                 <p className="mt-1 text-sm text-gray-500">Add a section to begin building the layout.</p>
                 <div className="mt-6">
-                  <button onClick={handleAddClick} className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-maroon-600 hover:bg-maroon-700">
+                  <button onClick={handleAddClick} className="btn-primary">
                     Add Section
                   </button>
                 </div>

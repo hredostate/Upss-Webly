@@ -20,16 +20,16 @@ export const NewsListSection: React.FC<{ section: Section }> = ({ section }) => 
   }, [limit]);
 
   return (
-    <section ref={ref} className="py-24 md:py-36 bg-white" aria-labelledby="news-heading">
-      <div className="max-w-7xl mx-auto px-6">
+    <section ref={ref} className="section bg-white" aria-labelledby="news-heading">
+      <div className="container-wide">
         <div className={`flex flex-col md:flex-row justify-between items-start md:items-end mb-20 border-b border-gray-100 pb-8 gap-8 reveal ${isVisible ? 'active' : ''}`}>
           <div className="max-w-2xl">
-            <h2 id="news-heading" className="font-serif text-4xl md:text-5xl text-gray-900 mb-6">{section.title}</h2>
+            <h2 id="news-heading" className="heading-2 mb-6">{section.title}</h2>
             {section.subtitle && <p className="text-gray-500 text-lg font-light leading-relaxed">{section.subtitle}</p>}
           </div>
           <Link 
             to="/news" 
-            className="hidden md:inline-flex items-center text-maroon-800 font-bold uppercase tracking-wider text-xs md:text-sm hover:underline group"
+            className="link hidden md:inline-flex items-center font-bold uppercase tracking-wider text-xs md:text-sm group"
           >
             View All News 
             <svg className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>

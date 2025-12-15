@@ -7,6 +7,34 @@ export default {
   theme: {
     extend: {
       colors: {
+        // UPSS Primary - Maroon (used across ALL sections)
+        primary: {
+          50: '#fdf2f2',
+          100: '#fde3e3',
+          200: '#fbd0d0',
+          300: '#f6aaaa',
+          400: '#ef7a7a',
+          500: '#e54d4d',
+          600: '#d12e2e',
+          700: '#b01e1e',
+          800: '#800000', // Main brand color
+          900: '#7a0b0b',
+          950: '#430202',
+        },
+        // Accent - Gold
+        accent: {
+          50: '#fffbeb',
+          100: '#FFF9E6',
+          200: '#FFECB3',
+          300: '#FFDF80',
+          400: '#FFD24D',
+          500: '#c9a227', // Main accent
+          600: '#AA8C2C',
+          700: '#806921',
+          800: '#554616',
+          900: '#2B230B',
+        },
+        // Keep maroon and gold as aliases for backward compatibility
         maroon: {
           50: '#fdf2f2',
           100: '#fde3e3',
@@ -21,6 +49,7 @@ export default {
           950: '#430202',
         },
         gold: {
+          50: '#fffbeb',
           100: '#FFF9E6',
           200: '#FFECB3',
           300: '#FFDF80',

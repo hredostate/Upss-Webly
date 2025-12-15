@@ -52,7 +52,7 @@ export default function Settings() {
       </div>
 
       <div className="flex justify-end">
-         <button className="bg-maroon-800 text-white px-6 py-2 rounded shadow-sm hover:bg-maroon-900 font-bold uppercase tracking-wide">
+         <button className="btn-primary">
             Save Configuration
          </button>
       </div>
