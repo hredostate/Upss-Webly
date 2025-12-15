@@ -20,6 +20,16 @@ import MediaLibrary from './pages/admin/MediaLibrary';
 import Settings from './pages/admin/Settings';
 import Users from './pages/admin/Users';
 
+// Careers components
+import CareersLayout from './components/careers/CareersLayout';
+import CareersHome from './pages/careers/CareersHome';
+import JobsListing from './pages/careers/JobsListing';
+import JobDetail from './pages/careers/JobDetail';
+import ApplicantLogin from './pages/careers/ApplicantLogin';
+import ApplicantRegister from './pages/careers/ApplicantRegister';
+import ApplicantDashboard from './pages/careers/ApplicantDashboard';
+import ApplicationDetail from './pages/careers/ApplicationDetail';
+
 export default function App() {
   return (
     <AuthProvider>
@@ -35,6 +45,19 @@ export default function App() {
             
             {/* Dynamic Catch-all for CMS Pages (About, Academics, Contact, etc.) */}
             <Route path=":slug" element={<GenericPage />} />
+          </Route>
+
+          {/* Careers Routes */}
+          <Route path="/careers" element={<CareersLayout />}>
+            <Route index element={<CareersHome />} />
+            <Route path="jobs" element={<JobsListing />} />
+            <Route path="jobs/:slug" element={<JobDetail />} />
+            <Route path="login" element={<ApplicantLogin />} />
+            <Route path="register" element={<ApplicantRegister />} />
+            <Route path="dashboard" element={<ApplicantDashboard />} />
+            <Route path="my-applications" element={<ApplicantDashboard />} />
+            <Route path="my-applications/:id" element={<ApplicationDetail />} />
+            {/* TODO: Add more careers routes as needed */}
           </Route>
 
           {/* Admin Routes */}
@@ -62,6 +85,8 @@ export default function App() {
             <Route path="media" element={<MediaLibrary />} />
             <Route path="settings" element={<Settings />} />
             <Route path="users" element={<Users />} />
+            
+            {/* TODO: Add Careers Admin Routes */}
           </Route>
 
           {/* Catch all */}
