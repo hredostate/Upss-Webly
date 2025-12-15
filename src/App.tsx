@@ -36,6 +36,18 @@ import AlumniChaptersPage from './pages/alumni/AlumniChaptersPage';
 import AlumniClassPage from './pages/alumni/AlumniClassPage';
 import AlumniDonatePage from './pages/alumni/AlumniDonatePage';
 
+// Careers components
+import CareersLayout from './components/careers/CareersLayout';
+import CareersHome from './pages/careers/CareersHome';
+import JobsListing from './pages/careers/JobsListing';
+import JobDetail from './pages/careers/JobDetail';
+import ApplicantLogin from './pages/careers/ApplicantLogin';
+import ApplicantRegister from './pages/careers/ApplicantRegister';
+import ApplicantDashboard from './pages/careers/ApplicantDashboard';
+import MyApplications from './pages/careers/MyApplications';
+import ApplicationDetail from './pages/careers/ApplicationDetail';
+import ApplyForJob from './pages/careers/ApplyForJob';
+
 export default function App() {
   return (
     <AuthProvider>
