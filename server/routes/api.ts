@@ -31,6 +31,7 @@ router.get('/careers/jobs', JobController.getAllJobs);
 router.get('/careers/jobs/slug/:slug', JobController.getJobBySlug);
 
 // Applicant Auth
+// SECURITY NOTE: In production, add rate limiting to prevent brute force attacks
 router.post('/careers/register', ApplicantController.register);
 router.post('/careers/login', ApplicantController.login);
 
