@@ -1,15 +1,16 @@
 
 import React from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const AdminLayout: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, signOut } = useAuth();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     if (window.confirm("Are you sure you want to sign out?")) {
-      localStorage.removeItem('upss_auth_token');
-      localStorage.removeItem('upss_user');
+      await signOut();
       navigate('/admin/login');
     }
   };
@@ -129,10 +130,12 @@ const AdminLayout: React.FC = () => {
         {/* User Footer */}
         <div className="p-4 border-t border-gray-800">
            <div className="flex items-center gap-3 mb-4 px-2">
-             <div className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-xs text-white font-bold">AD</div>
+             <div className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-xs text-white font-bold">
+               {user?.email?.charAt(0).toUpperCase() || 'A'}
+             </div>
              <div className="overflow-hidden">
                <p className="text-sm font-medium text-white truncate">Administrator</p>
-               <p className="text-xs text-gray-500 truncate">admin@upss.edu.ng</p>
+               <p className="text-xs text-gray-500 truncate">{user?.email || 'admin@upss.edu.ng'}</p>
              </div>
            </div>
           <button 
