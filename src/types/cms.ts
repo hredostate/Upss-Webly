@@ -23,11 +23,10 @@ export type SectionType =
   | 'LIST_BLOCK'
   | 'SIGNATURE_BLOCK'
   | 'FEATURE_LIST'
-  | 'IMAGE_GALLERY'
-  | 'FAQ'
-  | 'TESTIMONIALS'
-  | 'CONTACT_FORM'
-  | 'NEWS_LIST';
+  | 'VIDEO_HERO'
+  | 'VIDEO_EMBED'
+  | 'VIDEO_GALLERY'
+  | 'VIDEO_BLOCK';
 
 export interface Section {
   id: string;
