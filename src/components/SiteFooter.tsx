@@ -52,9 +52,9 @@ const SiteFooter: React.FC = () => {
             <ul className="space-y-3 text-sm text-gray-400">
               <li><a href="https://schoolguardian360.com/#Dashboard" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-200">Student Portal</a></li>
               <li><a href="https://schoolguardian360.com/#Dashboard" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-200">Parent Portal</a></li>
-              <li><a href="#" className="hover:text-white transition-colors duration-200">Alumni Network</a></li>
+              <li><Link to="/alumni" className="hover:text-white transition-colors duration-200">Alumni Network</Link></li>
               <li><a href="#" className="hover:text-white transition-colors duration-200">Library Catalog</a></li>
-              <li><a href="#" className="hover:text-white transition-colors duration-200">Employment Opportunities</a></li>
+              <li><Link to="/careers" className="hover:text-white transition-colors duration-200">Careers</Link></li>
             </ul>
           </div>
 
