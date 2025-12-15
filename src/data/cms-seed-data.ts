@@ -326,10 +326,10 @@ export const initialPagesWithSections: PageWithSections[] = [
         content: null,
         contentJson: {
           steps: [
-            { step: 1, title: 'Enquiry and Visit', description: 'Parents may call, message, or visit the school to discuss their child's needs and learn more about UPSS.' },
+            { step: 1, title: 'Enquiry and Visit', description: "Parents may call, message, or visit the school to discuss their child's needs and learn more about UPSS." },
             { step: 2, title: 'Purchase of Form', description: 'An application form is obtained, filled carefully, and submitted with required documents.' },
             { step: 3, title: 'Entrance Examination', description: 'Prospective students sit for an entrance examination appropriate to their level. The exam assesses literacy, numeracy, reasoning, and basic subject readiness.' },
-            { step: 4, title: 'Interview', description: 'Shortlisted students and their parents are invited for an interview. This conversation helps us understand the child's background, habits, and support system.' },
+            { step: 4, title: 'Interview', description: "Shortlisted students and their parents are invited for an interview. This conversation helps us understand the child's background, habits, and support system." },
             { step: 5, title: 'Admission Decision', description: 'Successful candidates receive an offer of admission with details about fees, requirements, and resumption.' },
             { step: 6, title: 'Onboarding and Orientation', description: 'New students are formally welcomed and guided through school rules, routines, and expectations.' },
           ],
@@ -503,7 +503,7 @@ export const initialPagesWithSections: PageWithSections[] = [
         order: 6,
         title: 'Parent Engagement',
         subtitle: null,
-        content: 'We see parents as partners.\nParent-teacher conferences, result discussions, open days, and special events are structured so that parents remain informed and actively involved in their child's progress.\nTogether, we hold students accountable and celebrate their growth.',
+        content: "We see parents as partners.\nParent-teacher conferences, result discussions, open days, and special events are structured so that parents remain informed and actively involved in their child's progress.\nTogether, we hold students accountable and celebrate their growth.",
         contentJson: null,
         isVisible: true,
         createdAt: now,
