@@ -2,7 +2,8 @@ import { query } from './db';
 import { JobApplicant, CreateJobApplicantDTO, UpdateJobApplicantDTO } from '../types/careers';
 import * as crypto from 'crypto';
 
-// Simple password hashing (in production, use bcrypt)
+// SECURITY WARNING: Simple password hashing for development only
+// TODO: Replace with bcrypt or argon2 before production deployment
 const hashPassword = (password: string): string => {
   return crypto.createHash('sha256').update(password).digest('hex');
 };

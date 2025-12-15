@@ -17,7 +17,8 @@ export const requireAdmin = (req: Request, res: Response, next: NextFunction) =>
 export const requireApplicant = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers['x-applicant-token'];
 
-  // In production, verify JWT or session
+  // SECURITY WARNING: Temporary token implementation for development
+  // TODO: Replace with proper JWT verification before production deployment
   if (!token) {
     return res.status(401).json({ 
       data: null, 

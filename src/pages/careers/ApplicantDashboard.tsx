@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { applicantApi, careersApi } from '../../api/careersClient';
 import { JobApplication, JobListing } from '../../types/careers';
 import StatusBadge from '../../components/careers/StatusBadge';
 
 const ApplicantDashboard: React.FC = () => {
+  const navigate = useNavigate();
   const [applicantName, setApplicantName] = useState('');
   const [applications, setApplications] = useState<JobApplication[]>([]);
   const [featuredJobs, setFeaturedJobs] = useState<JobListing[]>([]);
@@ -15,7 +16,7 @@ const ApplicantDashboard: React.FC = () => {
     const name = localStorage.getItem('applicantName');
     
     if (!token) {
-      window.location.href = '/#/careers/login';
+      navigate('/careers/login');
       return;
     }
 

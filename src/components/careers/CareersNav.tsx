@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const CareersNav: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [applicantName, setApplicantName] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -21,7 +22,7 @@ const CareersNav: React.FC = () => {
     localStorage.removeItem('applicantToken');
     localStorage.removeItem('applicantName');
     setIsLoggedIn(false);
-    window.location.href = '/#/careers';
+    navigate('/careers');
   };
 
   const isActive = (path: string) => location.pathname === path;

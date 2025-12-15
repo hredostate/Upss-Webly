@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { applicantApi } from '../../api/careersClient';
 import { JobApplication, ApplicationStatusHistory } from '../../types/careers';
 import StatusTracker from '../../components/careers/StatusTracker';
@@ -7,6 +7,7 @@ import StatusBadge from '../../components/careers/StatusBadge';
 
 const ApplicationDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [application, setApplication] = useState<JobApplication | null>(null);
   const [history, setHistory] = useState<ApplicationStatusHistory[]>([]);
   const [loading, setLoading] = useState(true);
@@ -18,7 +19,7 @@ const ApplicationDetail: React.FC = () => {
       
       const token = localStorage.getItem('applicantToken');
       if (!token) {
-        window.location.href = '/#/careers/login';
+        navigate('/careers/login');
         return;
       }
 

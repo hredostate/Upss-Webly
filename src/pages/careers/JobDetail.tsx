@@ -142,6 +142,7 @@ const JobDetail: React.FC = () => {
             {job.description && (
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">Job Description</h2>
+                {/* NOTE: In production, sanitize HTML with DOMPurify or use markdown instead */}
                 <div 
                   className="prose prose-blue max-w-none"
                   dangerouslySetInnerHTML={{ __html: job.description }}

@@ -226,6 +226,7 @@ const seedCareersData = async () => {
     console.log('Careers data seeding complete!');
   } catch (err) {
     console.error('Careers data seeding failed:', err);
+    process.exit(1);
   } finally {
     pool.end();
   }

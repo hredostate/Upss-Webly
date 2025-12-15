@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { applicantApi } from '../../api/careersClient';
 import { JobApplication } from '../../types/careers';
 import StatusBadge from '../../components/careers/StatusBadge';
 
 const MyApplications: React.FC = () => {
+  const navigate = useNavigate();
   const [applications, setApplications] = useState<JobApplication[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<string>('all');
@@ -13,7 +14,7 @@ const MyApplications: React.FC = () => {
     const token = localStorage.getItem('applicantToken');
     
     if (!token) {
-      window.location.href = '/#/careers/login';
+      navigate('/careers/login');
       return;
     }
 
