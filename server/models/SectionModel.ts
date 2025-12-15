@@ -7,7 +7,7 @@ export const SectionModel = {
       SELECT 
         id, page_id as "pageId", type, 
         order_index as "orderIndex", 
-        title, subtitle, 
+        title, subtitle, content,
         content_json as "contentJson", 
         is_visible as "isVisible", 
         created_at as "createdAt", 
@@ -22,12 +22,12 @@ export const SectionModel = {
 
   async create(data: CreateSectionDTO): Promise<Section> {
     const text = `
-      INSERT INTO sections (page_id, type, order_index, title, subtitle, content_json, is_visible)
-      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      INSERT INTO sections (page_id, type, order_index, title, subtitle, content, content_json, is_visible)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
       RETURNING 
         id, page_id as "pageId", type, 
         order_index as "orderIndex", 
-        title, subtitle, 
+        title, subtitle, content,
         content_json as "contentJson", 
         is_visible as "isVisible", 
         created_at as "createdAt", 
@@ -39,6 +39,7 @@ export const SectionModel = {
       data.orderIndex,
       data.title || null,
       data.subtitle || null,
+      data.content || null,
       data.contentJson || {},
       data.isVisible ?? true
     ];
@@ -55,6 +56,7 @@ export const SectionModel = {
     if (data.orderIndex !== undefined) { fields.push(`order_index = $${idx++}`); values.push(data.orderIndex); }
     if (data.title !== undefined) { fields.push(`title = $${idx++}`); values.push(data.title); }
     if (data.subtitle !== undefined) { fields.push(`subtitle = $${idx++}`); values.push(data.subtitle); }
+    if (data.content !== undefined) { fields.push(`content = $${idx++}`); values.push(data.content); }
     if (data.contentJson !== undefined) { fields.push(`content_json = $${idx++}`); values.push(data.contentJson); }
     if (data.isVisible !== undefined) { fields.push(`is_visible = $${idx++}`); values.push(data.isVisible); }
 
@@ -68,7 +70,7 @@ export const SectionModel = {
       RETURNING 
         id, page_id as "pageId", type, 
         order_index as "orderIndex", 
-        title, subtitle, 
+        title, subtitle, content,
         content_json as "contentJson", 
         is_visible as "isVisible", 
         created_at as "createdAt", 

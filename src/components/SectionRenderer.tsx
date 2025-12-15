@@ -6,10 +6,14 @@ import { ValueColumnsSection } from './sections/ValueColumnsSection';
 import { StatsSection } from './sections/StatsSection';
 import { NewsListSection } from './sections/NewsListSection';
 import { CtaBannerSection } from './sections/CtaBannerSection';
-import { VideoHeroSection } from './sections/VideoHeroSection';
-import { VideoEmbedSection } from './sections/VideoEmbedSection';
-import { VideoGallerySection } from './sections/VideoGallerySection';
-import { VideoBlockSection } from './sections/VideoBlockSection';
+import { ProcessStepsSection } from './sections/ProcessStepsSection';
+import { ListBlockSection } from './sections/ListBlockSection';
+import { SignatureBlockSection } from './sections/SignatureBlockSection';
+import { FeatureListSection } from './sections/FeatureListSection';
+import { ImageGallerySection } from './sections/ImageGallerySection';
+import { FaqSection } from './sections/FaqSection';
+import { TestimonialsSection } from './sections/TestimonialsSection';
+import { ContactFormSection } from './sections/ContactFormSection';
 
 export const SectionRenderer: React.FC<{ section: Section }> = ({ section }) => {
   if (!section.isVisible) return null;
@@ -25,14 +29,22 @@ export const SectionRenderer: React.FC<{ section: Section }> = ({ section }) => 
       return <NewsListSection section={section} />;
     case 'CTA_BANNER':
       return <CtaBannerSection section={section} />;
-    case 'VIDEO_HERO':
-      return <VideoHeroSection section={section} />;
-    case 'VIDEO_EMBED':
-      return <VideoEmbedSection section={section} />;
-    case 'VIDEO_GALLERY':
-      return <VideoGallerySection section={section} />;
-    case 'VIDEO_BLOCK':
-      return <VideoBlockSection section={section} />;
+    case 'PROCESS_STEPS':
+      return <ProcessStepsSection section={section} />;
+    case 'LIST_BLOCK':
+      return <ListBlockSection section={section} />;
+    case 'SIGNATURE_BLOCK':
+      return <SignatureBlockSection section={section} />;
+    case 'FEATURE_LIST':
+      return <FeatureListSection section={section} />;
+    case 'IMAGE_GALLERY':
+      return <ImageGallerySection section={section} />;
+    case 'FAQ':
+      return <FaqSection section={section} />;
+    case 'TESTIMONIALS':
+      return <TestimonialsSection section={section} />;
+    case 'CONTACT_FORM':
+      return <ContactFormSection section={section} />;
     case 'TEXT_BLOCK':
       return (
         <section className="py-20 bg-white">
@@ -42,7 +54,11 @@ export const SectionRenderer: React.FC<{ section: Section }> = ({ section }) => 
                 {section.title}
               </h2>
             )}
-            {section.contentJson.html ? (
+            {section.content ? (
+              <div className="prose prose-lg prose-headings:font-serif prose-a:text-maroon-800 text-gray-700 whitespace-pre-line">
+                {section.content}
+              </div>
+            ) : section.contentJson?.html ? (
               <div 
                 className="prose prose-lg prose-headings:font-serif prose-a:text-maroon-800 text-gray-700"
                 dangerouslySetInnerHTML={{ __html: section.contentJson.html }} 

@@ -10,10 +10,10 @@ export type SectionType =
   | 'LIST_BLOCK'
   | 'SIGNATURE_BLOCK'
   | 'FEATURE_LIST'
-  | 'VIDEO_HERO'
-  | 'VIDEO_EMBED'
-  | 'VIDEO_GALLERY'
-  | 'VIDEO_BLOCK';
+  | 'IMAGE_GALLERY'
+  | 'FAQ'
+  | 'TESTIMONIALS'
+  | 'CONTACT_FORM';
 
 export interface Section {
   id: string;
@@ -22,6 +22,7 @@ export interface Section {
   orderIndex: number;
   title?: string;
   subtitle?: string;
+  content?: string;
   contentJson: Record<string, any>;
   isVisible: boolean;
 }

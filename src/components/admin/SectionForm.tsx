@@ -1,6 +1,16 @@
 
 import React, { useState, useEffect } from 'react';
 import { Section, SectionType } from '../../types';
+import {
+  ProcessStepsEditor,
+  ListBlockEditor,
+  SignatureBlockEditor,
+  FeatureListEditor,
+  ImageGalleryEditor,
+  FaqEditor,
+  TestimonialsEditor,
+  ContactFormEditor,
+} from './section-editors';
 
 interface SectionFormProps {
   initialData?: Partial<Section>;
@@ -11,7 +21,8 @@ interface SectionFormProps {
 
 const SECTION_TYPES: SectionType[] = [
   'HERO', 'VALUE_COLUMNS', 'STATS', 'NEWS_LIST', 'TEXT_BLOCK', 'CTA_BANNER',
-  'VIDEO_HERO', 'VIDEO_EMBED', 'VIDEO_GALLERY', 'VIDEO_BLOCK'
+  'PROCESS_STEPS', 'LIST_BLOCK', 'SIGNATURE_BLOCK', 'FEATURE_LIST',
+  'IMAGE_GALLERY', 'FAQ', 'TESTIMONIALS', 'CONTACT_FORM'
 ];
 
 export const SectionForm: React.FC<SectionFormProps> = ({ initialData, onSave, onCancel, isLoading }) => {
@@ -263,13 +274,13 @@ export const SectionForm: React.FC<SectionFormProps> = ({ initialData, onSave, o
         />
       </div>
       <div>
-        <label className="block text-sm font-bold text-gray-700">Content Body (Rich Text)</label>
+        <label className="block text-sm font-bold text-gray-700">Content Body</label>
         <textarea
           rows={10}
-          value={contentFields.html || ''}
-          onChange={(e) => handleContentChange('html', e.target.value)}
+          value={formData.content || ''}
+          onChange={(e) => setFormData(prev => ({...prev, content: e.target.value}))}
           className="w-full p-2 border rounded mt-1"
-          placeholder="<p>Enter your content here...</p>"
+          placeholder="Enter your content here..."
         />
       </div>
     </div>
@@ -666,10 +677,78 @@ export const SectionForm: React.FC<SectionFormProps> = ({ initialData, onSave, o
       {formData.type === 'NEWS_LIST' && renderNewsListFields()}
       {formData.type === 'TEXT_BLOCK' && renderTextBlockFields()}
       {formData.type === 'CTA_BANNER' && renderCtaBannerFields()}
-      {formData.type === 'VIDEO_HERO' && renderVideoHeroFields()}
-      {formData.type === 'VIDEO_EMBED' && renderVideoEmbedFields()}
-      {formData.type === 'VIDEO_GALLERY' && renderVideoGalleryFields()}
-      {formData.type === 'VIDEO_BLOCK' && renderVideoBlockFields()}
+      {formData.type === 'PROCESS_STEPS' && (
+        <ProcessStepsEditor
+          contentJson={contentFields}
+          title={formData.title || ''}
+          subtitle={formData.subtitle || ''}
+          onContentChange={handleContentChange}
+          onFieldChange={(field, value) => setFormData(prev => ({ ...prev, [field]: value }))}
+        />
+      )}
+      {formData.type === 'LIST_BLOCK' && (
+        <ListBlockEditor
+          contentJson={contentFields}
+          title={formData.title || ''}
+          subtitle={formData.subtitle || ''}
+          onContentChange={handleContentChange}
+          onFieldChange={(field, value) => setFormData(prev => ({ ...prev, [field]: value }))}
+        />
+      )}
+      {formData.type === 'SIGNATURE_BLOCK' && (
+        <SignatureBlockEditor
+          contentJson={contentFields}
+          title={formData.title || ''}
+          content={formData.content || ''}
+          onContentChange={handleContentChange}
+          onFieldChange={(field, value) => setFormData(prev => ({ ...prev, [field]: value }))}
+        />
+      )}
+      {formData.type === 'FEATURE_LIST' && (
+        <FeatureListEditor
+          contentJson={contentFields}
+          title={formData.title || ''}
+          subtitle={formData.subtitle || ''}
+          onContentChange={handleContentChange}
+          onFieldChange={(field, value) => setFormData(prev => ({ ...prev, [field]: value }))}
+        />
+      )}
+      {formData.type === 'IMAGE_GALLERY' && (
+        <ImageGalleryEditor
+          contentJson={contentFields}
+          title={formData.title || ''}
+          subtitle={formData.subtitle || ''}
+          onContentChange={handleContentChange}
+          onFieldChange={(field, value) => setFormData(prev => ({ ...prev, [field]: value }))}
+        />
+      )}
+      {formData.type === 'FAQ' && (
+        <FaqEditor
+          contentJson={contentFields}
+          title={formData.title || ''}
+          subtitle={formData.subtitle || ''}
+          onContentChange={handleContentChange}
+          onFieldChange={(field, value) => setFormData(prev => ({ ...prev, [field]: value }))}
+        />
+      )}
+      {formData.type === 'TESTIMONIALS' && (
+        <TestimonialsEditor
+          contentJson={contentFields}
+          title={formData.title || ''}
+          subtitle={formData.subtitle || ''}
+          onContentChange={handleContentChange}
+          onFieldChange={(field, value) => setFormData(prev => ({ ...prev, [field]: value }))}
+        />
+      )}
+      {formData.type === 'CONTACT_FORM' && (
+        <ContactFormEditor
+          contentJson={contentFields}
+          title={formData.title || ''}
+          subtitle={formData.subtitle || ''}
+          onContentChange={handleContentChange}
+          onFieldChange={(field, value) => setFormData(prev => ({ ...prev, [field]: value }))}
+        />
+      )}
 
       <div className="flex justify-end gap-3 pt-6 border-t border-gray-200">
         <button
