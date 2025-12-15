@@ -95,6 +95,19 @@ export default function App() {
               <Route path="donate" element={<AlumniDonatePage />} />
             </Route>
 
+            {/* Careers/Employment Routes */}
+            <Route path="/careers" element={<CareersLayout />}>
+              <Route index element={<CareersHome />} />
+              <Route path="jobs" element={<JobsListing />} />
+              <Route path="jobs/:slug" element={<JobDetail />} />
+              <Route path="jobs/:slug/apply" element={<ApplyForJob />} />
+              <Route path="login" element={<ApplicantLogin />} />
+              <Route path="register" element={<ApplicantRegister />} />
+              <Route path="dashboard" element={<ApplicantDashboard />} />
+              <Route path="my-applications" element={<MyApplications />} />
+              <Route path="my-applications/:id" element={<ApplicationDetail />} />
+            </Route>
+
             {/* Admin Routes */}
             <Route path="/admin/login" element={<LoginPage />} />
             
