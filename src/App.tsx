@@ -2,9 +2,12 @@
 import React from 'react';
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { AlumniAuthProvider } from './context/AlumniAuthContext';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
+import { ProtectedAlumniRoute } from './components/alumni/ProtectedAlumniRoute';
 import MainLayout from './components/MainLayout';
 import AdminLayout from './components/AdminLayout';
+import { AlumniLayout } from './components/alumni/AlumniLayout';
 import HomePage from './pages/public/HomePage';
 import NewsIndex from './pages/public/NewsIndex';
 import NewsDetail from './pages/public/NewsDetail';
@@ -19,55 +22,99 @@ import AdminNewsForm from './pages/admin/AdminNewsForm';
 import MediaLibrary from './pages/admin/MediaLibrary';
 import Settings from './pages/admin/Settings';
 import Users from './pages/admin/Users';
+import AlumniHomePage from './pages/alumni/AlumniHomePage';
+import AlumniRegisterPage from './pages/alumni/AlumniRegisterPage';
+import AlumniLoginPage from './pages/alumni/AlumniLoginPage';
+import AlumniDashboardPage from './pages/alumni/AlumniDashboardPage';
+import AlumniProfilePage from './pages/alumni/AlumniProfilePage';
+import AlumniEditProfilePage from './pages/alumni/AlumniEditProfilePage';
+import AlumniDirectoryPage from './pages/alumni/AlumniDirectoryPage';
+import AlumniEventsPage from './pages/alumni/AlumniEventsPage';
+import AlumniEventDetailPage from './pages/alumni/AlumniEventDetailPage';
+import AlumniMessagesPage from './pages/alumni/AlumniMessagesPage';
+import AlumniChaptersPage from './pages/alumni/AlumniChaptersPage';
+import AlumniClassPage from './pages/alumni/AlumniClassPage';
+import AlumniDonatePage from './pages/alumni/AlumniDonatePage';
 
 export default function App() {
   return (
     <AuthProvider>
-      <Router>
-        <Routes>
-          {/* Public Routes using MainLayout */}
-          <Route path="/" element={<MainLayout />}>
-            <Route index element={<HomePage />} />
-            
-            {/* Specific Features */}
-            <Route path="news" element={<NewsIndex />} />
-            <Route path="news/:slug" element={<NewsDetail />} />
-            
-            {/* Dynamic Catch-all for CMS Pages (About, Academics, Contact, etc.) */}
-            <Route path=":slug" element={<GenericPage />} />
-          </Route>
+      <AlumniAuthProvider>
+        <Router>
+          <Routes>
+            {/* Public Routes using MainLayout */}
+            <Route path="/" element={<MainLayout />}>
+              <Route index element={<HomePage />} />
+              
+              {/* Specific Features */}
+              <Route path="news" element={<NewsIndex />} />
+              <Route path="news/:slug" element={<NewsDetail />} />
+              
+              {/* Dynamic Catch-all for CMS Pages (About, Academics, Contact, etc.) */}
+              <Route path=":slug" element={<GenericPage />} />
+            </Route>
 
-          {/* Admin Routes */}
-          <Route path="/admin/login" element={<LoginPage />} />
-          
-          <Route path="/admin" element={
-            <ProtectedRoute>
-              <AdminLayout />
-            </ProtectedRoute>
-          }>
-            <Route index element={<Dashboard />} />
-            
-            {/* Page Builder */}
-            <Route path="pages" element={<AdminPagesList />} />
-            <Route path="pages/new" element={<AdminPageForm />} />
-            <Route path="pages/:id" element={<AdminPageForm />} />
-            <Route path="pages/:pageId/sections" element={<AdminSectionsManager />} />
-            
-            {/* News Admin */}
-            <Route path="news" element={<AdminNewsList />} />
-            <Route path="news/new" element={<AdminNewsForm />} />
-            <Route path="news/:id" element={<AdminNewsForm />} />
+            {/* Alumni Routes */}
+            <Route path="/alumni" element={<AlumniLayout />}>
+              <Route index element={<AlumniHomePage />} />
+              <Route path="register" element={<AlumniRegisterPage />} />
+              <Route path="login" element={<AlumniLoginPage />} />
+              <Route path="dashboard" element={
+                <ProtectedAlumniRoute>
+                  <AlumniDashboardPage />
+                </ProtectedAlumniRoute>
+              } />
+              <Route path="profile/:id" element={<AlumniProfilePage />} />
+              <Route path="profile/edit" element={
+                <ProtectedAlumniRoute>
+                  <AlumniEditProfilePage />
+                </ProtectedAlumniRoute>
+              } />
+              <Route path="directory" element={<AlumniDirectoryPage />} />
+              <Route path="events" element={<AlumniEventsPage />} />
+              <Route path="events/:id" element={<AlumniEventDetailPage />} />
+              <Route path="messages" element={
+                <ProtectedAlumniRoute>
+                  <AlumniMessagesPage />
+                </ProtectedAlumniRoute>
+              } />
+              <Route path="chapters" element={<AlumniChaptersPage />} />
+              <Route path="class/:year" element={<AlumniClassPage />} />
+              <Route path="donate" element={<AlumniDonatePage />} />
+            </Route>
 
-            {/* Other Admin Features */}
-            <Route path="media" element={<MediaLibrary />} />
-            <Route path="settings" element={<Settings />} />
-            <Route path="users" element={<Users />} />
-          </Route>
+            {/* Admin Routes */}
+            <Route path="/admin/login" element={<LoginPage />} />
+            
+            <Route path="/admin" element={
+              <ProtectedRoute>
+                <AdminLayout />
+              </ProtectedRoute>
+            }>
+              <Route index element={<Dashboard />} />
+              
+              {/* Page Builder */}
+              <Route path="pages" element={<AdminPagesList />} />
+              <Route path="pages/new" element={<AdminPageForm />} />
+              <Route path="pages/:id" element={<AdminPageForm />} />
+              <Route path="pages/:pageId/sections" element={<AdminSectionsManager />} />
+              
+              {/* News Admin */}
+              <Route path="news" element={<AdminNewsList />} />
+              <Route path="news/new" element={<AdminNewsForm />} />
+              <Route path="news/:id" element={<AdminNewsForm />} />
 
-          {/* Catch all */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Router>
+              {/* Other Admin Features */}
+              <Route path="media" element={<MediaLibrary />} />
+              <Route path="settings" element={<Settings />} />
+              <Route path="users" element={<Users />} />
+            </Route>
+
+            {/* Catch all */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Router>
+      </AlumniAuthProvider>
     </AuthProvider>
   );
 }
