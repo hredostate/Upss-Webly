@@ -4,6 +4,7 @@ export interface Page {
   title: string;
   seoTitle: string;
   seoDescription: string;
+  trackType: 'general' | 'foundation' | 'science' | 'humanities' | 'business';
   isHomePage: boolean;
   createdAt: string;
   updatedAt: string;
@@ -17,7 +18,8 @@ export type SectionType =
   | 'CTA_BANNER'
   | 'PROCESS_STEPS'
   | 'LIST_BLOCK'
-  | 'SIGNATURE_BLOCK';
+  | 'SIGNATURE_BLOCK'
+  | 'FEATURE_LIST';
 
 export interface Section {
   id: string;
