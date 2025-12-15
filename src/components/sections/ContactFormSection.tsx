@@ -146,7 +146,7 @@ export const ContactFormSection: React.FC<{ section: Section }> = ({ section }) 
             <button
               type="submit"
               disabled={isSubmitting}
-              className="mt-8 w-full bg-maroon-800 text-white px-8 py-4 font-bold uppercase tracking-wider hover:bg-maroon-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300"
+              className="btn-primary mt-8 w-full disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? 'Sending...' : 'Send Message'}
             </button>
