@@ -43,15 +43,21 @@ export default function AlumniRegisterPage() {
     setLoading(true);
 
     try {
-      // 1. Create auth account
-      const result = await signUp(formData.email!, formData.password!);
+      // Validate required fields
+      if (!formData.email || !formData.password || !formData.first_name || !formData.last_name || !formData.graduation_year) {
+        throw new Error('Please fill in all required fields');
+      }
+
+      // 1. Create auth account (user is auto-signed in after signup)
+      const result = await signUp(formData.email, formData.password);
       
       if (result.error) {
         throw new Error(result.error.message);
       }
 
-      // Get the current user
-      const { data: { user } } = await alumniApi.login(formData.email!, formData.password!);
+      // Get user from current session (auto-signed in after signup)
+      const { data: { session } } = await alumniApi.login(formData.email, formData.password);
+      const user = session?.user;
 
       // 2. Upload photos if any
       let school_photo_url = '';
@@ -70,14 +76,14 @@ export default function AlumniRegisterPage() {
       // 3. Create profile
       const profileData = {
         user_id: user?.id,
-        email: formData.email!,
-        first_name: formData.first_name!,
-        last_name: formData.last_name!,
+        email: formData.email,
+        first_name: formData.first_name,
+        last_name: formData.last_name,
         maiden_name: formData.maiden_name,
         nickname: formData.nickname,
         gender: formData.gender,
         date_of_birth: formData.date_of_birth,
-        graduation_year: formData.graduation_year!,
+        graduation_year: formData.graduation_year,
         entry_year: formData.entry_year,
         house: formData.house,
         track: formData.track,
@@ -269,6 +275,17 @@ export default function AlumniRegisterPage() {
 // Step Components
 function AccountStep({ data, update }: any) {
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  const validatePasswords = (password: string, confirm: string) => {
+    if (confirm && password !== confirm) {
+      setPasswordError('Passwords do not match');
+    } else if (password && password.length < 6) {
+      setPasswordError('Password must be at least 6 characters');
+    } else {
+      setPasswordError('');
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -292,7 +309,10 @@ function AccountStep({ data, update }: any) {
           type="password"
           required
           value={data.password || ''}
-          onChange={(e) => update({ password: e.target.value })}
+          onChange={(e) => {
+            update({ password: e.target.value });
+            validatePasswords(e.target.value, confirmPassword);
+          }}
           className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
         />
         <p className="mt-1 text-sm text-gray-500">At least 6 characters</p>
@@ -305,9 +325,15 @@ function AccountStep({ data, update }: any) {
           type="password"
           required
           value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
+          onChange={(e) => {
+            setConfirmPassword(e.target.value);
+            validatePasswords(data.password || '', e.target.value);
+          }}
           className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
         />
+        {passwordError && (
+          <p className="mt-1 text-sm text-red-600">{passwordError}</p>
+        )}
       </div>
     </div>
   );
@@ -396,9 +422,11 @@ function BasicInfoStep({ data, update }: any) {
   );
 }
 
+const SCHOOL_FOUNDING_YEAR = 1990;
+
 function UpssInfoStep({ data, update }: any) {
   const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: currentYear - 1989 }, (_, i) => currentYear - i);
+  const years = Array.from({ length: currentYear - SCHOOL_FOUNDING_YEAR + 1 }, (_, i) => currentYear - i);
 
   return (
     <div className="space-y-6">

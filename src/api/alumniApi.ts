@@ -332,7 +332,12 @@ export const alumniApi = {
   },
 
   getDashboardStats: async (alumniId: string) => {
-    const { count: unreadMessages } = await alumniApi.getUnreadCount(alumniId);
+    // Get unread messages count
+    const { count: unreadMessages } = await supabase
+      .from('alumni_messages')
+      .select('*', { count: 'exact', head: true })
+      .eq('recipient_id', alumniId)
+      .eq('is_read', false);
     
     const { data: upcomingEvents } = await supabase
       .from('event_registrations')
