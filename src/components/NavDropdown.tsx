@@ -37,7 +37,7 @@ export const NavDropdown: React.FC<NavDropdownProps> = ({ label, path, items }) 
 
       {/* Dropdown Menu */}
       <div 
-        className={`absolute top-full left-0 mt-0 w-64 bg-white shadow-lg border border-gray-100 rounded-md overflow-hidden transition-all duration-200 ${
+        className={`absolute top-full left-0 mt-0 w-64 bg-white shadow-lg border border-gray-100 rounded-md overflow-hidden transition-all duration-200 z-50 ${
           isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
         }`}
       >
