@@ -9,7 +9,11 @@ export type SectionType =
   | 'PROCESS_STEPS'
   | 'LIST_BLOCK'
   | 'SIGNATURE_BLOCK'
-  | 'FEATURE_LIST';
+  | 'FEATURE_LIST'
+  | 'IMAGE_GALLERY'
+  | 'FAQ'
+  | 'TESTIMONIALS'
+  | 'CONTACT_FORM';
 
 export interface Section {
   id: string;
@@ -18,6 +22,7 @@ export interface Section {
   orderIndex: number;
   title?: string;
   subtitle?: string;
+  content?: string;
   contentJson: Record<string, any>;
   isVisible: boolean;
 }

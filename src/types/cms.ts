@@ -22,7 +22,12 @@ export type SectionType =
   | 'PROCESS_STEPS'
   | 'LIST_BLOCK'
   | 'SIGNATURE_BLOCK'
-  | 'FEATURE_LIST';
+  | 'FEATURE_LIST'
+  | 'IMAGE_GALLERY'
+  | 'FAQ'
+  | 'TESTIMONIALS'
+  | 'CONTACT_FORM'
+  | 'NEWS_LIST';
 
 export interface Section {
   id: string;
