@@ -189,7 +189,7 @@ export default function AdminPageForm() {
              <button
                type="submit"
                disabled={loading}
-               className="inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-bold rounded-md text-white bg-maroon-800 hover:bg-maroon-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-maroon-500 disabled:opacity-50 uppercase tracking-wide"
+               className="btn-primary disabled:opacity-50"
              >
                {loading ? 'Saving...' : 'Save Page Settings'}
              </button>

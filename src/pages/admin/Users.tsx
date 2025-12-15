@@ -5,7 +5,7 @@ export default function Users() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-900 font-serif">User Management</h1>
-        <button className="bg-maroon-800 text-white px-4 py-2 rounded shadow-sm hover:bg-maroon-900 transition-colors text-sm font-bold uppercase tracking-wider">
+        <button className="btn-primary">
            + Add User
         </button>
       </div>
