@@ -28,7 +28,9 @@ import JobDetail from './pages/careers/JobDetail';
 import ApplicantLogin from './pages/careers/ApplicantLogin';
 import ApplicantRegister from './pages/careers/ApplicantRegister';
 import ApplicantDashboard from './pages/careers/ApplicantDashboard';
+import MyApplications from './pages/careers/MyApplications';
 import ApplicationDetail from './pages/careers/ApplicationDetail';
+import ApplyForJob from './pages/careers/ApplyForJob';
 
 export default function App() {
   return (
@@ -52,10 +54,11 @@ export default function App() {
             <Route index element={<CareersHome />} />
             <Route path="jobs" element={<JobsListing />} />
             <Route path="jobs/:slug" element={<JobDetail />} />
+            <Route path="jobs/:slug/apply" element={<ApplyForJob />} />
             <Route path="login" element={<ApplicantLogin />} />
             <Route path="register" element={<ApplicantRegister />} />
             <Route path="dashboard" element={<ApplicantDashboard />} />
-            <Route path="my-applications" element={<ApplicantDashboard />} />
+            <Route path="my-applications" element={<MyApplications />} />
             <Route path="my-applications/:id" element={<ApplicationDetail />} />
             {/* TODO: Add more careers routes as needed */}
           </Route>
