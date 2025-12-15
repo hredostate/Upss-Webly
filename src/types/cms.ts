@@ -6,7 +6,7 @@ export interface Page {
   title: string;
   seoTitle: string;
   seoDescription: string;
-  trackType?: TrackType;
+  trackType: 'general' | 'foundation' | 'science' | 'humanities' | 'business';
   isHomePage: boolean;
   isPublished?: boolean;
   createdAt: string;
@@ -22,8 +22,7 @@ export type SectionType =
   | 'PROCESS_STEPS'
   | 'LIST_BLOCK'
   | 'SIGNATURE_BLOCK'
-  | 'FEATURE_LIST'
-  | 'NEWS_LIST';
+  | 'FEATURE_LIST';
 
 export interface Section {
   id: string;
