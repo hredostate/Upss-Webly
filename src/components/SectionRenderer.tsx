@@ -6,6 +6,10 @@ import { ValueColumnsSection } from './sections/ValueColumnsSection';
 import { StatsSection } from './sections/StatsSection';
 import { NewsListSection } from './sections/NewsListSection';
 import { CtaBannerSection } from './sections/CtaBannerSection';
+import { VideoHeroSection } from './sections/VideoHeroSection';
+import { VideoEmbedSection } from './sections/VideoEmbedSection';
+import { VideoGallerySection } from './sections/VideoGallerySection';
+import { VideoBlockSection } from './sections/VideoBlockSection';
 
 export const SectionRenderer: React.FC<{ section: Section }> = ({ section }) => {
   if (!section.isVisible) return null;
@@ -21,6 +25,14 @@ export const SectionRenderer: React.FC<{ section: Section }> = ({ section }) => 
       return <NewsListSection section={section} />;
     case 'CTA_BANNER':
       return <CtaBannerSection section={section} />;
+    case 'VIDEO_HERO':
+      return <VideoHeroSection section={section} />;
+    case 'VIDEO_EMBED':
+      return <VideoEmbedSection section={section} />;
+    case 'VIDEO_GALLERY':
+      return <VideoGallerySection section={section} />;
+    case 'VIDEO_BLOCK':
+      return <VideoBlockSection section={section} />;
     case 'TEXT_BLOCK':
       return (
         <section className="py-20 bg-white">

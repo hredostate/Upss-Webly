@@ -10,7 +10,8 @@ interface SectionFormProps {
 }
 
 const SECTION_TYPES: SectionType[] = [
-  'HERO', 'VALUE_COLUMNS', 'STATS', 'NEWS_LIST', 'TEXT_BLOCK', 'CTA_BANNER'
+  'HERO', 'VALUE_COLUMNS', 'STATS', 'NEWS_LIST', 'TEXT_BLOCK', 'CTA_BANNER',
+  'VIDEO_HERO', 'VIDEO_EMBED', 'VIDEO_GALLERY', 'VIDEO_BLOCK'
 ];
 
 export const SectionForm: React.FC<SectionFormProps> = ({ initialData, onSave, onCancel, isLoading }) => {
@@ -323,6 +324,301 @@ export const SectionForm: React.FC<SectionFormProps> = ({ initialData, onSave, o
     </div>
   );
 
+  const renderVideoHeroFields = () => (
+    <div className="space-y-4 border-t pt-4">
+      <div className="bg-gray-50 p-4 rounded text-sm text-gray-600 mb-4">
+        Full-width background video with overlay text and CTAs.
+      </div>
+      <div>
+        <label className="block text-sm font-bold text-gray-700">Video URL</label>
+        <input 
+          type="text"
+          value={contentFields.videoUrl || ''}
+          onChange={(e) => handleContentChange('videoUrl', e.target.value)}
+          className="w-full p-2 border rounded mt-1"
+          placeholder="https://..."
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-bold text-gray-700">Poster Image URL (Fallback)</label>
+        <input 
+          type="text"
+          value={contentFields.posterImage || ''}
+          onChange={(e) => handleContentChange('posterImage', e.target.value)}
+          className="w-full p-2 border rounded mt-1"
+          placeholder="https://..."
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-bold text-gray-700">Title</label>
+        <input 
+          type="text"
+          value={contentFields.title || ''}
+          onChange={(e) => handleContentChange('title', e.target.value)}
+          className="w-full p-2 border rounded mt-1"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-bold text-gray-700">Subtitle</label>
+        <textarea
+          value={contentFields.subtitle || ''}
+          onChange={(e) => handleContentChange('subtitle', e.target.value)}
+          className="w-full p-2 border rounded mt-1"
+          rows={2}
+        />
+      </div>
+      <div className="grid grid-cols-3 gap-4">
+        <div>
+          <label className="block text-sm font-bold text-gray-700">Overlay Opacity</label>
+          <input 
+            type="number"
+            min="0"
+            max="1"
+            step="0.1"
+            value={contentFields.overlayOpacity || 0.5}
+            onChange={(e) => handleContentChange('overlayOpacity', parseFloat(e.target.value))}
+            className="w-full p-2 border rounded mt-1"
+          />
+        </div>
+        <div>
+          <label className="flex items-center space-x-2 mt-6">
+            <input 
+              type="checkbox"
+              checked={!!contentFields.autoplay}
+              onChange={(e) => handleContentChange('autoplay', e.target.checked)}
+              className="rounded"
+            />
+            <span className="text-sm font-bold">Autoplay</span>
+          </label>
+        </div>
+        <div>
+          <label className="flex items-center space-x-2 mt-6">
+            <input 
+              type="checkbox"
+              checked={!!contentFields.loop}
+              onChange={(e) => handleContentChange('loop', e.target.checked)}
+              className="rounded"
+            />
+            <span className="text-sm font-bold">Loop</span>
+          </label>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-bold text-gray-700">Primary CTA Label</label>
+          <input 
+            type="text" 
+            value={contentFields.primaryCta?.label || ''}
+            onChange={(e) => handleContentChange('primaryCta', { ...contentFields.primaryCta, label: e.target.value })}
+            className="w-full p-2 border rounded mt-1"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-bold text-gray-700">Primary CTA Link</label>
+          <input 
+            type="text" 
+            value={contentFields.primaryCta?.link || ''}
+            onChange={(e) => handleContentChange('primaryCta', { ...contentFields.primaryCta, link: e.target.value })}
+            className="w-full p-2 border rounded mt-1"
+          />
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderVideoEmbedFields = () => (
+    <div className="space-y-4 border-t pt-4">
+      <div className="bg-gray-50 p-4 rounded text-sm text-gray-600 mb-4">
+        Embed videos from YouTube, Vimeo, or other platforms.
+      </div>
+      <div>
+        <label className="block text-sm font-bold text-gray-700">Section Title (Optional)</label>
+        <input 
+          type="text"
+          value={formData.title || ''}
+          onChange={(e) => setFormData(prev => ({...prev, title: e.target.value}))}
+          className="w-full p-2 border rounded mt-1"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-bold text-gray-700">Embed URL</label>
+        <input 
+          type="text"
+          value={contentFields.embedUrl || ''}
+          onChange={(e) => handleContentChange('embedUrl', e.target.value)}
+          className="w-full p-2 border rounded mt-1"
+          placeholder="https://www.youtube.com/watch?v=... or https://vimeo.com/..."
+        />
+      </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-bold text-gray-700">Embed Type</label>
+          <select
+            value={contentFields.embedType || 'youtube'}
+            onChange={(e) => handleContentChange('embedType', e.target.value)}
+            className="w-full p-2 border rounded mt-1"
+          >
+            <option value="youtube">YouTube</option>
+            <option value="vimeo">Vimeo</option>
+            <option value="custom">Custom</option>
+          </select>
+        </div>
+        <div>
+          <label className="block text-sm font-bold text-gray-700">Aspect Ratio</label>
+          <select
+            value={contentFields.aspectRatio || '16:9'}
+            onChange={(e) => handleContentChange('aspectRatio', e.target.value)}
+            className="w-full p-2 border rounded mt-1"
+          >
+            <option value="16:9">16:9 (Widescreen)</option>
+            <option value="4:3">4:3 (Standard)</option>
+            <option value="1:1">1:1 (Square)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderVideoGalleryFields = () => (
+    <div className="space-y-4 border-t pt-4">
+      <div className="bg-gray-50 p-4 rounded text-sm text-gray-600 mb-4">
+        Display multiple videos in a grid or carousel layout.
+      </div>
+      <div>
+        <label className="block text-sm font-bold text-gray-700">Section Title</label>
+        <input 
+          type="text"
+          value={formData.title || ''}
+          onChange={(e) => setFormData(prev => ({...prev, title: e.target.value}))}
+          className="w-full p-2 border rounded mt-1"
+        />
+      </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-bold text-gray-700">Layout</label>
+          <select
+            value={contentFields.layout || 'grid'}
+            onChange={(e) => handleContentChange('layout', e.target.value)}
+            className="w-full p-2 border rounded mt-1"
+          >
+            <option value="grid">Grid</option>
+            <option value="carousel">Carousel</option>
+          </select>
+        </div>
+        <div>
+          <label className="block text-sm font-bold text-gray-700">Columns (Grid)</label>
+          <select
+            value={contentFields.columns || 3}
+            onChange={(e) => handleContentChange('columns', parseInt(e.target.value))}
+            className="w-full p-2 border rounded mt-1"
+          >
+            <option value="2">2 Columns</option>
+            <option value="3">3 Columns</option>
+            <option value="4">4 Columns</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label className="block text-sm font-bold text-gray-700">Videos (JSON)</label>
+        <p className="text-xs text-gray-500 mb-2">Array of video objects with url, title, thumbnail, duration, category</p>
+        <textarea
+          rows={10}
+          value={JSON.stringify(contentFields.videos || [
+            { url: "video-url.mp4", title: "Video 1", thumbnail: "thumb.jpg", duration: "2:30", category: "Demo" }
+          ], null, 2)}
+          onChange={(e) => {
+            try {
+              handleContentChange('videos', JSON.parse(e.target.value));
+            } catch (err) {}
+          }}
+          className="w-full p-2 border rounded font-mono text-xs"
+        />
+      </div>
+    </div>
+  );
+
+  const renderVideoBlockFields = () => (
+    <div className="space-y-4 border-t pt-4">
+      <div className="bg-gray-50 p-4 rounded text-sm text-gray-600 mb-4">
+        Single video with accompanying text content.
+      </div>
+      <div>
+        <label className="block text-sm font-bold text-gray-700">Video URL</label>
+        <input 
+          type="text"
+          value={contentFields.videoUrl || ''}
+          onChange={(e) => handleContentChange('videoUrl', e.target.value)}
+          className="w-full p-2 border rounded mt-1"
+          placeholder="https://... or YouTube/Vimeo URL"
+        />
+      </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-bold text-gray-700">Video Type</label>
+          <select
+            value={contentFields.videoType || 'upload'}
+            onChange={(e) => handleContentChange('videoType', e.target.value)}
+            className="w-full p-2 border rounded mt-1"
+          >
+            <option value="upload">Uploaded Video</option>
+            <option value="youtube">YouTube</option>
+            <option value="vimeo">Vimeo</option>
+          </select>
+        </div>
+        <div>
+          <label className="block text-sm font-bold text-gray-700">Layout</label>
+          <select
+            value={contentFields.layout || 'video-left'}
+            onChange={(e) => handleContentChange('layout', e.target.value)}
+            className="w-full p-2 border rounded mt-1"
+          >
+            <option value="video-left">Video Left</option>
+            <option value="video-right">Video Right</option>
+            <option value="video-top">Video Top</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label className="block text-sm font-bold text-gray-700">Title</label>
+        <input 
+          type="text"
+          value={contentFields.title || ''}
+          onChange={(e) => handleContentChange('title', e.target.value)}
+          className="w-full p-2 border rounded mt-1"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-bold text-gray-700">Description</label>
+        <textarea
+          value={contentFields.description || ''}
+          onChange={(e) => handleContentChange('description', e.target.value)}
+          className="w-full p-2 border rounded mt-1"
+          rows={4}
+        />
+      </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-bold text-gray-700">CTA Label (Optional)</label>
+          <input 
+            type="text"
+            value={contentFields.ctaLabel || ''}
+            onChange={(e) => handleContentChange('ctaLabel', e.target.value)}
+            className="w-full p-2 border rounded mt-1"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-bold text-gray-700">CTA Link</label>
+          <input 
+            type="text"
+            value={contentFields.ctaLink || ''}
+            onChange={(e) => handleContentChange('ctaLink', e.target.value)}
+            className="w-full p-2 border rounded mt-1"
+          />
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -362,6 +658,10 @@ export const SectionForm: React.FC<SectionFormProps> = ({ initialData, onSave, o
       {formData.type === 'NEWS_LIST' && renderNewsListFields()}
       {formData.type === 'TEXT_BLOCK' && renderTextBlockFields()}
       {formData.type === 'CTA_BANNER' && renderCtaBannerFields()}
+      {formData.type === 'VIDEO_HERO' && renderVideoHeroFields()}
+      {formData.type === 'VIDEO_EMBED' && renderVideoEmbedFields()}
+      {formData.type === 'VIDEO_GALLERY' && renderVideoGalleryFields()}
+      {formData.type === 'VIDEO_BLOCK' && renderVideoBlockFields()}
 
       <div className="flex justify-end gap-3 pt-6 border-t border-gray-200">
         <button

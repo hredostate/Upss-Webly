@@ -22,7 +22,11 @@ export type SectionType =
   | 'PROCESS_STEPS'
   | 'LIST_BLOCK'
   | 'SIGNATURE_BLOCK'
-  | 'FEATURE_LIST';
+  | 'FEATURE_LIST'
+  | 'VIDEO_HERO'
+  | 'VIDEO_EMBED'
+  | 'VIDEO_GALLERY'
+  | 'VIDEO_BLOCK';
 
 export interface Section {
   id: string;
