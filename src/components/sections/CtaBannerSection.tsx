@@ -17,16 +17,12 @@ export const CtaBannerSection: React.FC<{ section: Section }> = ({ section }) =>
          <h2 className={`heading-2 mb-6 leading-tight ${isDark ? 'text-white' : 'text-gray-900'}`}>
            {section.title}
          </h2>
-         <p className={`mb-10 text-lg md:text-xl font-light leading-relaxed max-w-2xl mx-auto ${isDark ? 'text-gray-200' : 'text-gray-600'}`}>
+         <p className={`mb-10 font-light leading-relaxed ${isDark ? 'hero-subtitle-dark' : 'hero-subtitle-light'}`}>
            {text}
          </p>
          <Link 
            to={ctaLink || '#'} 
-           className={`btn ${
-             isDark 
-               ? 'btn-secondary bg-transparent border-white text-white hover:bg-white hover:text-primary-900' 
-               : 'btn-primary'
-           }`}
+           className={isDark ? 'btn-secondary-dark' : 'btn-primary'}
          >
            {ctaLabel}
          </Link>
