@@ -50,8 +50,9 @@ export const mediaApi = {
         duration = metadata.duration;
         videoWidth = metadata.width;
         videoHeight = metadata.height;
-        // Note: Thumbnail generation would typically be done server-side or via a service
-        // For now, we'll leave it as optional
+        // TODO: Implement server-side thumbnail generation using a service like ffmpeg
+        // or a cloud function. Client-side thumbnail generation is limited and unreliable.
+        // For now, thumbnails can be uploaded separately or generated post-upload.
       }
       
       // Get image dimensions if it's an image

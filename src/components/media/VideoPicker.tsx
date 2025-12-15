@@ -49,13 +49,14 @@ export const VideoPicker: React.FC<VideoPickerProps> = ({
   const handleEmbedSubmit = () => {
     if (!embedUrl) return;
     
-    // Create a pseudo-media object for embedded videos
+    // Create a media object for embedded videos with special handling
+    // Note: Embedded videos use a custom mimeType to distinguish them from uploaded videos
     const embedMedia: Media = {
       id: `embed-${Date.now()}`,
       fileName: embedUrl,
       originalName: embedUrl,
       fileType: 'video',
-      mimeType: 'video/embed',
+      mimeType: 'application/x-video-embed', // Custom MIME type for embedded videos
       fileSize: 0,
       fileUrl: embedUrl,
       folder: 'embed',

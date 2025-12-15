@@ -27,6 +27,10 @@ export const VideoUpload: React.FC<VideoUploadProps> = ({
     const file = e.target.files?.[0];
     if (!file) return;
 
+    await processFile(file);
+  };
+
+  const processFile = async (file: File) => {
     setError(null);
 
     // Validate file type
@@ -95,11 +99,8 @@ export const VideoUpload: React.FC<VideoUploadProps> = ({
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
-    if (file && fileInputRef.current) {
-      const dataTransfer = new DataTransfer();
-      dataTransfer.items.add(file);
-      fileInputRef.current.files = dataTransfer.files;
-      handleFileSelect({ target: fileInputRef.current } as any);
+    if (file) {
+      processFile(file);
     }
   };
 

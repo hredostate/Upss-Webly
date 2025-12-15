@@ -529,10 +529,18 @@ export const SectionForm: React.FC<SectionFormProps> = ({ initialData, onSave, o
           onChange={(e) => {
             try {
               handleContentChange('videos', JSON.parse(e.target.value));
-            } catch (err) {}
+            } catch (err) {
+              // Show error feedback to user
+              if (e.target.value.trim()) {
+                console.error('Invalid JSON format');
+                // You could set an error state here to show to the user
+              }
+            }
           }}
           className="w-full p-2 border rounded font-mono text-xs"
+          placeholder='[{"url": "video.mp4", "title": "My Video", "thumbnail": "thumb.jpg"}]'
         />
+        <p className="text-xs text-red-500 mt-1">Make sure the JSON is valid. Use online JSON validators if needed.</p>
       </div>
     </div>
   );

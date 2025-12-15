@@ -14,8 +14,12 @@ export const VideoGallerySection: React.FC<{ section: Section }> = ({ section })
   const [selectedVideo, setSelectedVideo] = useState<typeof videos[0] | null>(null);
   const [filter, setFilter] = useState<string>('all');
 
-  // Get unique categories
-  const categories = ['all', ...new Set(videos.map(v => v.category).filter(Boolean))];
+  // Helper function to extract unique categories from videos
+  const getUniqueCategories = (videoList: typeof videos): string[] => {
+    return ['all', ...new Set(videoList.map(v => v.category).filter((c): c is string => Boolean(c)))];
+  };
+
+  const categories = getUniqueCategories(videos);
 
   // Filter videos by category
   const filteredVideos = filter === 'all' 
