@@ -31,30 +31,32 @@ export default {
           800: '#554616',
           900: '#2B230B',
         },
-        // Careers theme colors (Navy Blue & Gold)
-        navy: {
-          50: '#e6eef7',
-          100: '#ccddef',
-          200: '#99bbe0',
-          300: '#6699d0',
-          400: '#3377c1',
-          500: '#0055b1',
-          600: '#004489',
-          700: '#003361',
-          800: '#002238',
-          900: '#1e3a5f', // Careers Primary Navy
+        // Alumni colors
+        blue: {
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6',
+          600: '#2563eb',
+          700: '#1d4ed8',
+          800: '#1e40af',
+          900: '#1e3a5f', // Navy Blue (Alumni Primary)
+          950: '#172554',
         },
-        careersGold: {
-          100: '#FFF8E1',
-          200: '#FFE9A3',
-          300: '#FFD966',
-          400: '#D4AF37',
-          500: '#c9a227', // Careers Accent Gold
-          600: '#A68521',
-          700: '#82671A',
-          800: '#5E4913',
-          900: '#3A2C0C',
-        }
+        yellow: {
+          50: '#fefce8',
+          100: '#fef9c3',
+          200: '#fef08a',
+          300: '#fde047',
+          400: '#facc15',
+          500: '#c9a227', // Gold (Alumni Accent)
+          600: '#ca8a04',
+          700: '#a16207',
+          800: '#854d0e',
+          900: '#713f12',
+        },
       },
       fontFamily: {
         serif: ['"DM Serif Display"', 'serif'],
