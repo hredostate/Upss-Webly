@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { BRAND_MARK_URL } from '../config/branding';
 
 interface LogoProps {
   className?: string;
@@ -14,13 +15,11 @@ export const Logo: React.FC<LogoProps> = ({ className = "", size = 'md' }) => {
     lg: "w-20 h-20"
   };
 
-  const logoUrl = "https://tyvufbldcucgmmlattct.supabase.co/storage/v1/object/public/Images/imageedit_1_5058819643%20(1).png";
-
   return (
     <div className={`relative flex items-center justify-center ${sizeClasses[size]} ${className}`} aria-label="UPSS Logo">
-      <img 
-        src={logoUrl} 
-        alt="UPSS Logo" 
+      <img
+        src={BRAND_MARK_URL}
+        alt="UPSS Logo"
         className="w-full h-full object-contain"
       />
     </div>

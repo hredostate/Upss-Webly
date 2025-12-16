@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AdminClient } from '../../api/adminClient';
 import { Page } from '../../types';
+import { BrandSpinner } from '../../components/common/BrandSpinner';
 
 export default function AdminPagesList() {
   const [pages, setPages] = useState<Page[]>([]);
@@ -61,7 +62,7 @@ export default function AdminPagesList() {
     return p ? p.title : 'this page';
   }
 
-  if (loading) return <div className="p-8 text-center text-gray-500">Loading pages...</div>;
+  if (loading) return <div className="p-8 text-center text-gray-500"><BrandSpinner label="Loading pages" /></div>;
   if (error) return <div className="p-8 text-center text-red-500">{error}</div>;
 
   return (
