@@ -47,12 +47,14 @@ import ApplicantDashboard from './pages/careers/ApplicantDashboard';
 import MyApplications from './pages/careers/MyApplications';
 import ApplicationDetail from './pages/careers/ApplicationDetail';
 import ApplyForJob from './pages/careers/ApplyForJob';
+import { ScrollRestoration } from './components/navigation/ScrollRestoration';
 
 export default function App() {
   return (
     <AuthProvider>
       <AlumniAuthProvider>
         <Router>
+          <ScrollRestoration />
           <Routes>
             {/* Public Routes using MainLayout */}
             <Route path="/" element={<MainLayout />}>
