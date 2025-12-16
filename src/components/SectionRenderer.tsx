@@ -14,6 +14,7 @@ import { ImageGallerySection } from './sections/ImageGallerySection';
 import { FaqSection } from './sections/FaqSection';
 import { TestimonialsSection } from './sections/TestimonialsSection';
 import { ContactFormSection } from './sections/ContactFormSection';
+import { MediaPlaceholder } from './common/MediaPlaceholder';
 
 export const SectionRenderer: React.FC<{ section: Section }> = ({ section }) => {
   if (!section.isVisible) return null;
@@ -45,7 +46,54 @@ export const SectionRenderer: React.FC<{ section: Section }> = ({ section }) => 
       return <TestimonialsSection section={section} />;
     case 'CONTACT_FORM':
       return <ContactFormSection section={section} />;
-    case 'TEXT_BLOCK':
+    case 'TEXT_BLOCK': {
+      const layout = (section.contentJson as any)?.layout || 'stack';
+      const media = (section.contentJson as any)?.mediaPlaceholder as
+        | { label?: string; type?: 'image' | 'video'; aspect?: 'wide' | 'square' }
+        | undefined;
+
+      const renderCopy = () => {
+        if (section.content) {
+          return (
+            <div className="prose prose-lg prose-headings:font-serif prose-a:text-maroon-800 text-gray-700 whitespace-pre-line">
+              {section.content}
+            </div>
+          );
+        }
+
+        if (section.contentJson?.html) {
+          return (
+            <div
+              className="prose prose-lg prose-headings:font-serif prose-a:text-maroon-800 text-gray-700"
+              dangerouslySetInnerHTML={{ __html: section.contentJson.html }}
+            />
+          );
+        }
+
+        return <p className="text-gray-500 italic">No content provided.</p>;
+      };
+
+      if (layout === 'split' && media) {
+        return (
+          <section className="py-20 bg-white">
+            <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+              <div>
+                {section.title && (
+                  <h2 className="text-3xl md:text-4xl font-serif text-gray-900 mb-6 border-l-4 border-maroon-800 pl-4">
+                    {section.title}
+                  </h2>
+                )}
+                {section.subtitle && <p className="text-lg text-gray-600 mb-6 leading-relaxed">{section.subtitle}</p>}
+                {renderCopy()}
+              </div>
+              <div className="w-full">
+                <MediaPlaceholder label={media.label} type={media.type} aspect={media.aspect} />
+              </div>
+            </div>
+          </section>
+        );
+      }
+
       return (
         <section className="py-20 bg-white">
           <div className="max-w-4xl mx-auto px-6">
@@ -54,21 +102,11 @@ export const SectionRenderer: React.FC<{ section: Section }> = ({ section }) => 
                 {section.title}
               </h2>
             )}
-            {section.content ? (
-              <div className="prose prose-lg prose-headings:font-serif prose-a:text-maroon-800 text-gray-700 whitespace-pre-line">
-                {section.content}
-              </div>
-            ) : section.contentJson?.html ? (
-              <div 
-                className="prose prose-lg prose-headings:font-serif prose-a:text-maroon-800 text-gray-700"
-                dangerouslySetInnerHTML={{ __html: section.contentJson.html }} 
-              />
-            ) : (
-              <p className="text-gray-500 italic">No content provided.</p>
-            )}
+            {renderCopy()}
           </div>
         </section>
       );
+    }
     default:
       console.warn(`Unknown section type: ${section.type}`);
       return null;

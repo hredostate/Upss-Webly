@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { CmsClient } from '../../api/cmsClient';
 import { NewsItem } from '../../types';
+import { BrandSpinner } from '../../components/common/BrandSpinner';
 
 export default function NewsDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -25,7 +26,7 @@ export default function NewsDetail() {
     }
   }, [slug]);
 
-  if (loading) return <div className="min-h-screen bg-white flex items-center justify-center">Loading...</div>;
+  if (loading) return <BrandSpinner fullscreen label="Loading article" />;
   if (error || !article) return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
       <h1 className="text-2xl font-serif text-gray-900 mb-4">Article Not Found</h1>
