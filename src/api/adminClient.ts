@@ -2,6 +2,17 @@ import { supabase } from '../lib/supabase';
 import { Page, Section, NewsItem } from '../types';
 
 export const AdminClient = {
+  // --- Auth (legacy admin panel) ---
+  login: async (email: string, password: string) => {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) throw new Error(error.message);
+
+    return {
+      token: data.session?.access_token,
+      user: data.user,
+    };
+  },
+
   // --- Page CRUD ---
   getPages: async (): Promise<Page[]> => {
     const { data, error } = await supabase
