@@ -194,7 +194,7 @@ const PrimaryNav: React.FC = () => {
               onClick={() => setIsOpen(false)}
               className="block w-full text-center py-3 text-gray-500 text-sm font-semibold hover:text-primary-900"
             >
-              Website Admin
+              Login
             </Link>
           </div>
         </div>

@@ -4,6 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import { AdminClient } from '../../api/adminClient';
 import { Page, Section } from '../../types';
 import { SectionForm } from '../../components/admin/SectionForm';
+import { BrandSpinner } from '../../components/common/BrandSpinner';
 
 export default function AdminSectionsManager() {
   const { pageId } = useParams<{ pageId: string }>();
@@ -121,7 +122,7 @@ export default function AdminSectionsManager() {
     }
   };
 
-  if (loading) return <div className="p-10 text-center">Loading section manager...</div>;
+  if (loading) return <div className="p-10 text-center"><BrandSpinner label="Loading sections" /></div>;
   if (error || !page) return <div className="p-10 text-red-600">Error: {error || 'Page not found'}</div>;
 
   return (

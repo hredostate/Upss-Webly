@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { CmsClient } from '../../api/cmsClient';
 import { Page, Section } from '../../types';
 import { SectionRenderer } from '../../components/SectionRenderer';
+import { BrandSpinner } from '../../components/common/BrandSpinner';
 
 const GenericPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -40,11 +41,7 @@ const GenericPage: React.FC = () => {
   }, [slug]);
 
   if (loading) {
-    return (
-      <div className="min-h-[50vh] flex items-center justify-center bg-white">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-maroon-800"></div>
-      </div>
-    );
+    return <BrandSpinner fullscreen={false} label="Loading page" />;
   }
 
   if (error || !page) {

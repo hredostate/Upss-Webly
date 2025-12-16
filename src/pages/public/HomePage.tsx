@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { CmsClient } from '../../api/cmsClient';
 import { Section } from '../../types';
 import { SectionRenderer } from '../../components/SectionRenderer';
+import { BrandSpinner } from '../../components/common/BrandSpinner';
 
 const HomePage: React.FC = () => {
   const [sections, setSections] = useState<Section[]>([]);
@@ -28,11 +29,7 @@ const HomePage: React.FC = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className="h-screen flex items-center justify-center bg-white">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-maroon-800"></div>
-      </div>
-    );
+    return <BrandSpinner fullscreen label="Loading school homepage" />;
   }
 
   return (
