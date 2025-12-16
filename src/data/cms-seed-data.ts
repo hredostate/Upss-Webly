@@ -1840,6 +1840,227 @@ export const initialPagesWithSections: PageWithSections[] = [
       },
     ],
   },
+
+  // ==========================================
+  // CONTACT PAGE
+  // ==========================================
+  {
+    page: {
+      id: 'page_contact',
+      slug: 'contact',
+      title: 'Contact',
+      seoTitle: 'Contact UPSS | University Preparatory Secondary School',
+      seoDescription: 'Get in touch with UPSS for admissions, partnerships, or general enquiries.',
+      trackType: 'general',
+      isHomePage: false,
+      createdAt: now,
+      updatedAt: now,
+    },
+    sections: [
+      {
+        id: 'section_contact_hero',
+        pageId: 'page_contact',
+        type: 'HERO',
+        order: 1,
+        title: 'We\'re Here to Help',
+        subtitle: 'Contact UPSS for admissions, partnerships, or general enquiries.',
+        content: null,
+        contentJson: {
+          backgroundImage: heroPlaceholder,
+        },
+        isVisible: true,
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        id: 'section_contact_details',
+        pageId: 'page_contact',
+        type: 'TEXT_BLOCK',
+        order: 2,
+        title: 'Contact Details',
+        subtitle: null,
+        content:
+          'Phone: +234 ___ ___ ____ (placeholder)\nWhatsApp: +234 ___ ___ ____ (placeholder)\nEmail: info@upss.ng (best guess; adjust if different)\nAdmissions Email: admissions@upss.ng (placeholder)',
+        contentJson: {
+          layout: 'split',
+          mediaPlaceholder: { label: 'Call or message', type: 'image' },
+        },
+        isVisible: true,
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        id: 'section_contact_address',
+        pageId: 'page_contact',
+        type: 'TEXT_BLOCK',
+        order: 3,
+        title: 'Campus Address & Office Hours',
+        subtitle: null,
+        content:
+          'UPSS Campus: Benin City, Edo State, Nigeria (best guess placeholder—insert exact address)\n\nOffice Hours\nMonday–Friday: 8:00am – 4:00pm\nSaturday: 9:00am – 1:00pm (optional)\nSunday: Closed',
+        contentJson: {
+          layout: 'split',
+          mediaPlaceholder: { label: 'Visit campus', type: 'image', aspect: 'square' },
+        },
+        isVisible: true,
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        id: 'section_contact_form',
+        pageId: 'page_contact',
+        type: 'LIST_BLOCK',
+        order: 4,
+        title: 'Contact Form',
+        subtitle: 'Let us know how we can support you.',
+        content: 'Fields to include:',
+        contentJson: {
+          listTitle: 'Fields',
+          items: [
+            'Full Name',
+            'Phone Number',
+            'Email',
+            'Reason for Contact (Admissions / Fees / Careers / Alumni / General)',
+            'Message',
+            'Preferred Contact Method (Call / WhatsApp / Email)',
+          ],
+        },
+        isVisible: true,
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        id: 'section_contact_map',
+        pageId: 'page_contact',
+        type: 'TEXT_BLOCK',
+        order: 5,
+        title: 'Map',
+        subtitle: null,
+        content: 'Embedded Google Map placeholder: [Map Embed Here]',
+        contentJson: {
+          layout: 'split',
+          mediaPlaceholder: { label: 'Map embed', type: 'video' },
+        },
+        isVisible: true,
+        createdAt: now,
+        updatedAt: now,
+      },
+    ],
+  },
+
+  // ==========================================
+  // QUICK LINKS PAGE
+  // ==========================================
+  {
+    page: {
+      id: 'page_quick_links',
+      slug: 'quick-links',
+      title: 'Quick Links',
+      seoTitle: 'Quick Links | University Preparatory Secondary School',
+      seoDescription: 'Essential UPSS links including history, calendar, fees, portals, and resources.',
+      trackType: 'general',
+      isHomePage: false,
+      createdAt: now,
+      updatedAt: now,
+    },
+    sections: [
+      {
+        id: 'section_quick_links_hero',
+        pageId: 'page_quick_links',
+        type: 'HERO',
+        order: 1,
+        title: 'Quick Links & Resources',
+        subtitle: 'Find the essentials fast — calendars, fees, portals, and downloads for UPSS families and students.',
+        content: null,
+        contentJson: {
+          backgroundImage: heroPlaceholder,
+        },
+        isVisible: true,
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        id: 'section_quick_links_history',
+        pageId: 'page_quick_links',
+        type: 'TEXT_BLOCK',
+        order: 2,
+        title: 'Our History',
+        subtitle: null,
+        content:
+          'Founding year: ____ (placeholder)\nGrowth milestones: campus expansion, academic achievements, alumni success (placeholder)\nUPSS today: disciplined, exam-focused, holistic development',
+        contentJson: {
+          layout: 'split',
+          mediaPlaceholder: { label: 'Timeline graphic', type: 'image' },
+        },
+        isVisible: true,
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        id: 'section_quick_links_calendar',
+        pageId: 'page_quick_links',
+        type: 'TEXT_BLOCK',
+        order: 3,
+        title: 'Academic Calendar (Best Guess Layout)',
+        subtitle: null,
+        content:
+          '1st Term: Sept – Dec\n2nd Term: Jan – Apr\n3rd Term: Apr/May – Jul\n\nInclude:\nResumption date (placeholder)\nMid-term break (placeholder)\nExams period (placeholder)\nPTA/open day (placeholder)',
+        contentJson: {
+          layout: 'split',
+          mediaPlaceholder: { label: 'Calendar preview', type: 'image', aspect: 'square' },
+        },
+        isVisible: true,
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        id: 'section_quick_links_fees',
+        pageId: 'page_quick_links',
+        type: 'TEXT_BLOCK',
+        order: 4,
+        title: 'Tuition & Fees',
+        subtitle: null,
+        content:
+          'Clear table by class level (JSS1–SSS3)\nDay vs Boarding\nWhat’s included (tuition, prep, some materials)\nWhat’s excluded (uniforms, external exams, transport, etc.)\nPayment options (termly, installment policy if any)',
+        contentJson: {
+          layout: 'split',
+          mediaPlaceholder: { label: 'Fees table', type: 'image' },
+        },
+        isVisible: true,
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        id: 'section_quick_links_portals',
+        pageId: 'page_quick_links',
+        type: 'LIST_BLOCK',
+        order: 5,
+        title: 'Portals & Quick Access',
+        subtitle: null,
+        content: 'Links at a glance:',
+        contentJson: {
+          listTitle: 'Access',
+          items: [
+            'Contact Us — link to Contact page + quick info (phone/email/location)',
+            'Latest News — link to News page with top 3 posts preview',
+            'Downloadable brochures (placeholder)',
+            'Academic handbook (placeholder)',
+            'Booklist (placeholder)',
+            'Exam timetable (placeholder)',
+            'School policies (placeholder)',
+            'Student Portal (Placeholder): Login, Results/Reports, Assignments (if enabled), Notices',
+            'Parent Portal (Placeholder): Student performance updates, Fee statements (if enabled), Announcements, Messaging (if enabled)',
+            'Alumni Network: Register, Events, Mentorship, Giving',
+            'Library Catalog (Placeholder): Search books, Recommended reading by level, Research resources',
+            'Careers: Link to Careers page + open roles preview',
+          ],
+        },
+        isVisible: true,
+        createdAt: now,
+        updatedAt: now,
+      },
+    ],
+  },
 ];
 
 // ============================================

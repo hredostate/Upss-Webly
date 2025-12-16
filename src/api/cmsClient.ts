@@ -1,10 +1,17 @@
 
 import { Page, Section, ApiResponse, NewsItem } from '../types';
+import initialPagesWithSections, { getSectionsByPageId } from '../data/cms-seed-data';
 
 const API_BASE = 'http://localhost:3001/api';
 
 async function fetchJson<T>(endpoint: string): Promise<T> {
   const response = await fetch(`${API_BASE}${endpoint}`);
+
+  if (!response.ok) {
+    const errorMessage = await response.text().catch(() => response.statusText);
+    throw new Error(errorMessage || response.statusText);
+  }
+
   const result: ApiResponse<T> = await response.json();
   if (result.error) {
     throw new Error(result.error);
@@ -15,13 +22,41 @@ async function fetchJson<T>(endpoint: string): Promise<T> {
   return result.data;
 }
 
+const getFallbackPageBySlug = (slug: string): Page | null => {
+  const match = initialPagesWithSections.find((item) => item.page.slug === slug);
+  return match ? match.page : null;
+};
+
+const getFallbackSectionsForPage = (pageId: string): Section[] => {
+  const sections = getSectionsByPageId(pageId) as unknown as Section[];
+
+  return sections
+    .map((section) => ({
+      ...section,
+      orderIndex: (section as any).orderIndex ?? (section as any).order ?? 0,
+    }))
+    .sort((a, b) => (a.orderIndex || 0) - (b.orderIndex || 0));
+};
+
 export const CmsClient = {
   getPageBySlug: async (slug: string): Promise<Page> => {
-    return fetchJson<Page>(`/pages/slug/${slug}`);
+    try {
+      return await fetchJson<Page>(`/pages/slug/${slug}`);
+    } catch (error) {
+      const fallback = getFallbackPageBySlug(slug);
+      if (fallback) return fallback;
+      throw error;
+    }
   },
 
   getSectionsForPage: async (pageId: string): Promise<Section[]> => {
-    return fetchJson<Section[]>(`/pages/${pageId}/sections`);
+    try {
+      return await fetchJson<Section[]>(`/pages/${pageId}/sections`);
+    } catch (error) {
+      const fallbackSections = getFallbackSectionsForPage(pageId);
+      if (fallbackSections.length) return fallbackSections;
+      throw error;
+    }
   },
 
   getNews: async (featured?: boolean, limit?: number): Promise<NewsItem[]> => {
