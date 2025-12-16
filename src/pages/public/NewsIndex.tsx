@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CmsClient } from '../../api/cmsClient';
 import { NewsItem } from '../../types';
+import { BrandSpinner } from '../../components/common/BrandSpinner';
 
 export default function NewsIndex() {
   const [news, setNews] = useState<NewsItem[]>([]);
@@ -19,11 +20,7 @@ export default function NewsIndex() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-maroon-800"></div>
-      </div>
-    );
+    return <BrandSpinner fullscreen label="Loading stories" />;
   }
 
   return (
