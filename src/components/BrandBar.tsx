@@ -28,7 +28,7 @@ const BrandBar: React.FC = () => {
             className="text-gray-200 hover:text-white transition-colors duration-200 flex items-center gap-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500"
             aria-label="Admin Portal Login"
           >
-            <span>Website Admin</span>
+            <span>Login</span>
           </Link>
         </nav>
       </div>

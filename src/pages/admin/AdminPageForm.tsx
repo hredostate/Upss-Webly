@@ -20,8 +20,14 @@ export default function AdminPageForm() {
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(false);
   const [error, setError] = useState('');
+  const [slugError, setSlugError] = useState('');
+  const [existingPages, setExistingPages] = useState<Page[]>([]);
 
   useEffect(() => {
+    AdminClient.getPages()
+      .then((data) => setExistingPages(data))
+      .catch(() => setExistingPages([]));
+
     if (isEditMode && id) {
       setFetching(true);
       AdminClient.getPage(id)
@@ -39,7 +45,15 @@ export default function AdminPageForm() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    if (name === 'slug') {
+      const safeSlug = value
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)+/g, '');
+      setFormData(prev => ({ ...prev, [name]: safeSlug }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,10 +61,28 @@ export default function AdminPageForm() {
     setFormData(prev => ({ ...prev, [name]: checked }));
   };
 
+  useEffect(() => {
+    if (!formData.slug) {
+      setSlugError('Slug is required.');
+      return;
+    }
+
+    const conflict = existingPages.some(
+      (page) => page.slug === formData.slug && (!isEditMode || page.id !== id)
+    );
+
+    setSlugError(conflict ? 'Slug already exists. Choose a unique path.' : '');
+  }, [existingPages, formData.slug, id, isEditMode]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+
+    if (slugError) {
+      setLoading(false);
+      return;
+    }
 
     try {
       if (isEditMode && id) {
@@ -119,17 +151,18 @@ export default function AdminPageForm() {
                 https://upss.edu.ng/
               </span>
               <input
-                type="text"
-                name="slug"
-                id="slug"
-                required
-                value={formData.slug}
-                onChange={handleChange}
-                className="flex-1 min-w-0 block w-full px-3 py-3 rounded-none rounded-r-md border border-gray-300 focus:ring-maroon-500 focus:border-maroon-500 sm:text-sm"
-                placeholder="about-us"
-              />
+              type="text"
+              name="slug"
+              id="slug"
+              required
+              value={formData.slug}
+              onChange={handleChange}
+              className="flex-1 min-w-0 block w-full px-3 py-3 rounded-none rounded-r-md border border-gray-300 focus:ring-maroon-500 focus:border-maroon-500 sm:text-sm"
+              placeholder="about-us"
+            />
             </div>
             <p className="mt-1 text-xs text-gray-500">Slug must be unique and contain only lowercase letters, numbers, and hyphens.</p>
+            {slugError && <p className="mt-1 text-xs text-red-600 font-semibold">{slugError}</p>}
           </div>
 
           {/* SEO Section */}
@@ -187,11 +220,11 @@ export default function AdminPageForm() {
                Cancel
              </Link>
              <button
-               type="submit"
-               disabled={loading}
-               className="btn-primary disabled:opacity-50"
-             >
-               {loading ? 'Saving...' : 'Save Page Settings'}
+             type="submit"
+              disabled={loading}
+              className="btn-primary disabled:opacity-50"
+            >
+              {loading ? 'Saving...' : 'Save Page Settings'}
              </button>
           </div>
         </form>
