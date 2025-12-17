@@ -1,4 +1,4 @@
-import { query } from './db';
+import { query } from './db.js';
 import { Section, CreateSectionDTO } from '../types/cms';
 
 export const SectionModel = {

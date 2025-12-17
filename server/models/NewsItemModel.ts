@@ -1,5 +1,5 @@
 
-import { query } from './db';
+import { query } from './db.js';
 import { NewsItem, CreateNewsItemDTO } from '../types/cms';
 
 export const NewsItemModel = {

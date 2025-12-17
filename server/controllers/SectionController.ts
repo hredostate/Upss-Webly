@@ -1,6 +1,6 @@
 
 import { Request, Response } from 'express';
-import { SectionModel } from '../models/SectionModel';
+import { SectionModel } from '../models/SectionModel.js';
 
 const sendResponse = (res: Response, data: any = null, error: string | null = null, status = 200) => {
   res.status(status).json({ data, error });

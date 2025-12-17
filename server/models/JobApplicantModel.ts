@@ -1,4 +1,4 @@
-import { query } from './db';
+import { query } from './db.js';
 import { JobApplicant, CreateJobApplicantDTO, UpdateJobApplicantDTO } from '../types/careers';
 import * as crypto from 'crypto';
 

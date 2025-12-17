@@ -1,6 +1,6 @@
 
 import { Request, Response } from 'express';
-import { NewsItemModel } from '../models/NewsItemModel';
+import { NewsItemModel } from '../models/NewsItemModel.js';
 
 const sendResponse = (res: Response, data: any = null, error: string | null = null, status = 200) => {
   res.status(status).json({ data, error });
