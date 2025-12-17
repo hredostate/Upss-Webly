@@ -2,7 +2,7 @@
 import { Page, Section, ApiResponse, NewsItem } from '../types';
 import initialPagesWithSections, { getSectionsByPageId } from '../data/cms-seed-data';
 
-const API_BASE = 'http://localhost:3001/api';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api';
 
 async function fetchJson<T>(endpoint: string): Promise<T> {
   const response = await fetch(`${API_BASE}${endpoint}`);
