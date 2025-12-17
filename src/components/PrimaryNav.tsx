@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Logo } from './Logo';
 
 const navLinks = [
   { name: 'About', path: '/about' },
-  { name: 'Academics', path: '/academics' },
   { name: 'Admissions', path: '/admissions' },
   { name: 'Student Life', path: '/student-life' },
   { name: 'Contact', path: '/contact' },
   { name: 'News', path: '/news' },
+];
+
+const programLinks = [
+  { name: 'Academics Overview', path: '/academics', description: 'How we deliver rigorous, future-ready learning.' },
+  { name: 'Junior Secondary', path: '/junior-secondary', description: 'Foundational habits, literacy, numeracy, and curiosity.' },
+  { name: 'Senior Secondary – Science', path: '/senior-secondary-science', description: 'Laboratory strength, research, and Olympiad readiness.' },
+  { name: 'Senior Secondary – Humanities', path: '/senior-secondary-humanities', description: 'Communication, debate, and civic leadership.' },
+  { name: 'Senior Secondary – Business', path: '/senior-secondary-business', description: 'Enterprise thinking, finance literacy, and leadership.' },
 ];
 
 const exploreLinks = [
@@ -24,6 +31,7 @@ const exploreLinks = [
   { name: 'Alumni Network', path: '/alumni-network', description: 'Stay connected and mentor students.' },
   { name: 'Community Impact', path: '/community-impact', description: 'Leadership through service.' },
   { name: 'Staff Excellence', path: '/staff-excellence', description: 'Prepared, disciplined teachers.' },
+  { name: 'Quick Links', path: '/quick-links', description: 'Forms, calendars, and key downloads.' },
 ];
 
 const secondaryLinks = [
@@ -34,12 +42,43 @@ const secondaryLinks = [
 const PrimaryNav: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [exploreOpen, setExploreOpen] = useState(false);
+  const [programsOpen, setProgramsOpen] = useState(false);
+  const [mobileExploreOpen, setMobileExploreOpen] = useState(false);
+  const [mobileProgramsOpen, setMobileProgramsOpen] = useState(false);
   const location = useLocation();
+  const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setIsOpen(false);
     setExploreOpen(false);
+    setProgramsOpen(false);
+    setMobileExploreOpen(false);
+    setMobileProgramsOpen(false);
   }, [location]);
+
+  useEffect(() => {
+    const handleClickAway = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setExploreOpen(false);
+        setProgramsOpen(false);
+      }
+    };
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setExploreOpen(false);
+        setProgramsOpen(false);
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('pointerdown', handleClickAway);
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.removeEventListener('pointerdown', handleClickAway);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, []);
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : 'unset';
     return () => { document.body.style.overflow = 'unset'; };
@@ -64,7 +103,7 @@ const PrimaryNav: React.FC = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-2" ref={navRef}>
             {navLinks.map((link) => (
               <NavLink key={link.name} to={link.path} className={navLinkClass}>
                 {({ isActive }) => (
@@ -80,18 +119,66 @@ const PrimaryNav: React.FC = () => {
               </NavLink>
             ))}
 
-            <div
-              className="relative"
-              onMouseEnter={() => setExploreOpen(true)}
-              onMouseLeave={() => setExploreOpen(false)}
-            >
+            <div className="relative">
+              <button
+                className={`px-3 py-2 text-sm font-semibold transition-colors inline-flex items-center gap-2 ${
+                  programsOpen ? 'text-primary-900' : 'text-gray-600 hover:text-primary-800'
+                }`}
+                onClick={() => {
+                  setProgramsOpen((prev) => !prev);
+                  setExploreOpen(false);
+                }}
+                aria-expanded={programsOpen}
+                aria-haspopup="true"
+              >
+                Programs
+                <svg
+                  className={`w-4 h-4 transition-transform ${programsOpen ? 'rotate-180' : ''}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              <div
+                className={`absolute left-0 mt-3 w-[520px] bg-white rounded-2xl shadow-xl border border-gray-100 p-5 transition-all duration-200 origin-top-left ${
+                  programsOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'
+                }`}
+              >
+                <div className="grid grid-cols-2 gap-4">
+                  {programLinks.map((link) => (
+                    <NavLink
+                      key={link.name}
+                      to={link.path}
+                      className={({ isActive }) =>
+                        `block rounded-xl border transition p-4 ${
+                          isActive
+                            ? 'border-primary-200 bg-primary-50 text-primary-900'
+                            : 'border-gray-100 hover:border-primary-200 hover:bg-primary-50'
+                        }`
+                      }
+                    >
+                      <span className="block text-sm font-semibold text-primary-900">{link.name}</span>
+                      <span className="block text-xs text-gray-600 leading-snug">{link.description}</span>
+                    </NavLink>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="relative">
               <button
                 className={`px-3 py-2 text-sm font-semibold transition-colors inline-flex items-center gap-2 ${
                   exploreOpen ? 'text-primary-900' : 'text-gray-600 hover:text-primary-800'
                 }`}
-                onClick={() => setExploreOpen((prev) => !prev)}
-                onFocus={() => setExploreOpen(true)}
+                onClick={() => {
+                  setExploreOpen((prev) => !prev);
+                  setProgramsOpen(false);
+                }}
                 aria-expanded={exploreOpen}
+                aria-haspopup="true"
               >
                 Explore
                 <svg
@@ -105,7 +192,7 @@ const PrimaryNav: React.FC = () => {
               </button>
 
               <div
-                className={`absolute right-0 mt-3 w-[480px] bg-white rounded-2xl shadow-xl border border-gray-100 p-4 transition-all duration-200 origin-top-right ${
+                className={`absolute right-0 mt-3 w-[520px] bg-white rounded-2xl shadow-xl border border-gray-100 p-4 transition-all duration-200 origin-top-right ${
                   exploreOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'
                 }`}
               >
@@ -224,27 +311,70 @@ const PrimaryNav: React.FC = () => {
             ))}
           </div>
 
-          <div className="pt-2">
-            <p className="text-xs text-gray-400 uppercase tracking-wide mb-2">Explore</p>
-            <div className="grid grid-cols-1 gap-2">
-              {exploreLinks.map((link) => (
-                <NavLink
-                  key={link.name}
-                  to={link.path}
-                  onClick={() => setIsOpen(false)}
-                  className={({ isActive }) =>
-                    `block py-3 px-3 rounded-lg border text-base font-semibold transition-colors ${
-                      isActive
-                        ? 'border-primary-200 bg-primary-50 text-primary-900'
-                        : 'border-gray-100 text-gray-800 hover:bg-gray-50'
-                    }`
-                  }
-                >
-                  <span className="block leading-tight">{link.name}</span>
-                  <span className="block text-xs text-gray-500">{link.description}</span>
-                </NavLink>
-              ))}
-            </div>
+          <div className="pt-2 space-y-4">
+            <button
+              className="w-full flex items-center justify-between py-3 px-3 rounded-lg border border-gray-200 text-base font-semibold text-gray-800 hover:bg-gray-50"
+              onClick={() => setMobileProgramsOpen((prev) => !prev)}
+              aria-expanded={mobileProgramsOpen}
+            >
+              Programs
+              <svg className={`w-5 h-5 transition-transform ${mobileProgramsOpen ? 'rotate-180' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            {mobileProgramsOpen && (
+              <div className="grid grid-cols-1 gap-2">
+                {programLinks.map((link) => (
+                  <NavLink
+                    key={link.name}
+                    to={link.path}
+                    onClick={() => setIsOpen(false)}
+                    className={({ isActive }) =>
+                      `block py-3 px-3 rounded-lg border text-base font-semibold transition-colors ${
+                        isActive
+                          ? 'border-primary-200 bg-primary-50 text-primary-900'
+                          : 'border-gray-100 text-gray-800 hover:bg-gray-50'
+                      }`
+                    }
+                  >
+                    <span className="block leading-tight">{link.name}</span>
+                    <span className="block text-xs text-gray-500">{link.description}</span>
+                  </NavLink>
+                ))}
+              </div>
+            )}
+
+            <button
+              className="w-full flex items-center justify-between py-3 px-3 rounded-lg border border-gray-200 text-base font-semibold text-gray-800 hover:bg-gray-50"
+              onClick={() => setMobileExploreOpen((prev) => !prev)}
+              aria-expanded={mobileExploreOpen}
+            >
+              Explore
+              <svg className={`w-5 h-5 transition-transform ${mobileExploreOpen ? 'rotate-180' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            {mobileExploreOpen && (
+              <div className="grid grid-cols-1 gap-2">
+                {exploreLinks.map((link) => (
+                  <NavLink
+                    key={link.name}
+                    to={link.path}
+                    onClick={() => setIsOpen(false)}
+                    className={({ isActive }) =>
+                      `block py-3 px-3 rounded-lg border text-base font-semibold transition-colors ${
+                        isActive
+                          ? 'border-primary-200 bg-primary-50 text-primary-900'
+                          : 'border-gray-100 text-gray-800 hover:bg-gray-50'
+                      }`
+                    }
+                  >
+                    <span className="block leading-tight">{link.name}</span>
+                    <span className="block text-xs text-gray-500">{link.description}</span>
+                  </NavLink>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="pt-4 border-t border-gray-100 space-y-1">

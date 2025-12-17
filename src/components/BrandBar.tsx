@@ -26,7 +26,7 @@ const BrandBar: React.FC = () => {
           <Link
             to="/admin/login"
             className="text-gray-200 hover:text-white transition-colors duration-200 flex items-center gap-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500"
-            aria-label="Admin Portal Login"
+            aria-label="Website manager login"
           >
             <span>Login</span>
           </Link>

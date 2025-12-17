@@ -11,39 +11,41 @@ export const ListBlockSection: React.FC<{ section: Section }> = ({ section }) =>
   }
 
   return (
-    <section ref={ref} className="py-20 bg-white" aria-label={section.title || "List"}>
-      <div className="max-w-4xl mx-auto px-6">
-        {section.title && (
-          <h2 className={`text-3xl md:text-4xl font-serif text-gray-900 mb-8 border-l-4 border-maroon-800 pl-4 reveal ${isVisible ? 'active' : ''}`}>
-            {section.title}
-          </h2>
-        )}
-        {section.subtitle && (
-          <p className={`text-xl text-gray-600 mb-12 reveal stagger-2 ${isVisible ? 'active' : ''}`}>
-            {section.subtitle}
-          </p>
-        )}
-        
-        {listType === 'numbered' ? (
-          <ol className={`list-decimal list-outside ml-6 space-y-4 reveal stagger-3 ${isVisible ? 'active' : ''}`}>
+    <section ref={ref} className="py-20 bg-slate-50" aria-label={section.title || "List"}>
+      <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-[1.2fr,1fr] gap-12 items-start">
+        <div>
+          {section.title && (
+            <h2 className={`text-3xl md:text-4xl font-serif text-gray-900 mb-4 reveal ${isVisible ? 'active' : ''}`}>
+              {section.title}
+            </h2>
+          )}
+          {section.subtitle && (
+            <p className={`text-lg md:text-xl text-gray-600 mb-6 reveal stagger-2 ${isVisible ? 'active' : ''}`}>
+              {section.subtitle}
+            </p>
+          )}
+          <div className="p-6 rounded-2xl bg-white shadow-sm border border-gray-100">
+            <p className="text-sm font-semibold text-primary-800 uppercase tracking-[0.2em] mb-2">What to expect</p>
+            <p className="text-gray-600 leading-relaxed">Each checkpoint is intentionally sequenced so families understand the journey and outcomes of this programme.</p>
+          </div>
+        </div>
+
+        <div className="relative">
+          <div className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-primary-200 via-primary-300 to-primary-100" aria-hidden />
+          <div className="space-y-6">
             {items.map((item: string, idx: number) => (
-              <li key={idx} className="text-lg text-gray-700 leading-relaxed pl-2">
-                {item}
-              </li>
+              <div
+                key={idx}
+                className={`relative pl-10 py-4 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-all reveal stagger-${(idx % 3) + 1} ${isVisible ? 'active' : ''}`}
+              >
+                <div className="absolute left-1 top-6 w-6 h-6 rounded-full bg-white border-2 border-primary-700 flex items-center justify-center text-xs font-bold text-primary-900">
+                  {listType === 'numbered' ? idx + 1 : '✔'}
+                </div>
+                <p className="text-base md:text-lg text-gray-800 leading-relaxed">{item}</p>
+              </div>
             ))}
-          </ol>
-        ) : (
-          <ul className={`space-y-4 reveal stagger-3 ${isVisible ? 'active' : ''}`}>
-            {items.map((item: string, idx: number) => (
-              <li key={idx} className="flex items-start gap-4">
-                <svg className="w-6 h-6 text-maroon-800 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span className="text-lg text-gray-700 leading-relaxed">{item}</span>
-              </li>
-            ))}
-          </ul>
-        )}
+          </div>
+        </div>
       </div>
     </section>
   );

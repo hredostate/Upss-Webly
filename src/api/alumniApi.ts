@@ -319,9 +319,12 @@ export const alumniApi = {
       .select('amount')
       .eq('payment_status', 'completed');
 
-    const uniqueCountries = new Set(countries?.map(c => c.country)).size;
-    const uniqueCompanies = new Set(companies?.map(c => c.company)).size;
-    const totalDonations = donations?.reduce((sum, d) => sum + Number(d.amount), 0) || 0;
+    const uniqueCountries = new Set((countries || []).map((c: { country: string }) => c.country)).size;
+    const uniqueCompanies = new Set((companies || []).map((c: { company: string }) => c.company)).size;
+    const totalDonations = (donations || []).reduce(
+      (sum: number, d: { amount: number | string }) => sum + Number(d.amount),
+      0
+    );
 
     return {
       total_alumni: totalAlumni || 0,

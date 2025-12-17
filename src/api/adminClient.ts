@@ -1,9 +1,14 @@
-import { supabase } from '../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { Page, Section, NewsItem } from '../types';
+import { localCmsStore } from '../lib/localCmsStore';
 
 export const AdminClient = {
   // --- Auth (legacy admin panel) ---
   login: async (email: string, password: string) => {
+    if (!isSupabaseConfigured) {
+      throw new Error('Supabase is not configured. Using local admin fallback.');
+    }
+
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) throw new Error(error.message);
 
@@ -15,6 +20,7 @@ export const AdminClient = {
 
   // --- Page CRUD ---
   getPages: async (): Promise<Page[]> => {
+    if (!isSupabaseConfigured) return localCmsStore.getPages();
     const { data, error } = await supabase
       .from('pages')
       .select('*')
@@ -24,6 +30,7 @@ export const AdminClient = {
   },
 
   getPage: async (id: string): Promise<Page> => {
+    if (!isSupabaseConfigured) return localCmsStore.getPage(id);
     const { data, error } = await supabase
       .from('pages')
       .select('*')
@@ -34,6 +41,7 @@ export const AdminClient = {
   },
 
   createPage: async (pageData: Partial<Page>): Promise<Page> => {
+    if (!isSupabaseConfigured) return localCmsStore.createPage(pageData);
     const { data, error } = await supabase
       .from('pages')
       .insert([pageData])
@@ -44,6 +52,7 @@ export const AdminClient = {
   },
 
   updatePage: async (id: string, pageData: Partial<Page>): Promise<Page> => {
+    if (!isSupabaseConfigured) return localCmsStore.updatePage(id, pageData);
     const { data, error } = await supabase
       .from('pages')
       .update(pageData)
@@ -55,12 +64,14 @@ export const AdminClient = {
   },
 
   deletePage: async (id: string): Promise<void> => {
+    if (!isSupabaseConfigured) return localCmsStore.deletePage(id);
     const { error } = await supabase.from('pages').delete().eq('id', id);
     if (error) throw new Error(error.message);
   },
 
   // --- Section CRUD ---
   getSections: async (pageId: string): Promise<Section[]> => {
+    if (!isSupabaseConfigured) return localCmsStore.getSections(pageId);
     const { data, error } = await supabase
       .from('sections')
       .select('*')
@@ -71,6 +82,7 @@ export const AdminClient = {
   },
 
   createSection: async (pageId: string, sectionData: Partial<Section>): Promise<Section> => {
+    if (!isSupabaseConfigured) return localCmsStore.createSection(pageId, sectionData);
     const { data, error } = await supabase
       .from('sections')
       .insert([{ ...sectionData, page_id: pageId }])
@@ -81,6 +93,7 @@ export const AdminClient = {
   },
 
   updateSection: async (id: string, sectionData: Partial<Section>): Promise<Section> => {
+    if (!isSupabaseConfigured) return localCmsStore.updateSection(id, sectionData);
     const { data, error } = await supabase
       .from('sections')
       .update(sectionData)
@@ -92,11 +105,13 @@ export const AdminClient = {
   },
 
   deleteSection: async (id: string): Promise<void> => {
+    if (!isSupabaseConfigured) return localCmsStore.deleteSection(id);
     const { error } = await supabase.from('sections').delete().eq('id', id);
     if (error) throw new Error(error.message);
   },
 
   reorderSections: async (orderedIds: string[]): Promise<void> => {
+    if (!isSupabaseConfigured) return localCmsStore.reorderSections(orderedIds);
     const updates = orderedIds.map((id, index) =>
       supabase.from('sections').update({ section_order: index }).eq('id', id)
     );
@@ -105,6 +120,7 @@ export const AdminClient = {
 
   // --- News CRUD ---
   getNews: async (): Promise<NewsItem[]> => {
+    if (!isSupabaseConfigured) return localCmsStore.getNews();
     const { data, error } = await supabase
       .from('news')
       .select('*')
@@ -114,6 +130,7 @@ export const AdminClient = {
   },
 
   getNewsItem: async (id: string): Promise<NewsItem> => {
+    if (!isSupabaseConfigured) return localCmsStore.getNewsItem(id);
     const { data, error } = await supabase
       .from('news')
       .select('*')
@@ -124,6 +141,7 @@ export const AdminClient = {
   },
 
   createNewsItem: async (newsData: Partial<NewsItem>): Promise<NewsItem> => {
+    if (!isSupabaseConfigured) return localCmsStore.createNewsItem(newsData);
     const { data, error } = await supabase
       .from('news')
       .insert([newsData])
@@ -134,6 +152,7 @@ export const AdminClient = {
   },
 
   updateNewsItem: async (id: string, newsData: Partial<NewsItem>): Promise<NewsItem> => {
+    if (!isSupabaseConfigured) return localCmsStore.updateNewsItem(id, newsData);
     const { data, error } = await supabase
       .from('news')
       .update(newsData)
@@ -145,6 +164,7 @@ export const AdminClient = {
   },
 
   deleteNewsItem: async (id: string): Promise<void> => {
+    if (!isSupabaseConfigured) return localCmsStore.deleteNewsItem(id);
     const { error } = await supabase.from('news').delete().eq('id', id);
     if (error) throw new Error(error.message);
   },
