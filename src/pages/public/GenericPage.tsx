@@ -5,6 +5,7 @@ import { CmsClient } from '../../api/cmsClient';
 import { Page, Section } from '../../types';
 import { SectionRenderer } from '../../components/SectionRenderer';
 import { BrandSpinner } from '../../components/common/BrandSpinner';
+import { SectionPatternGrid } from '../../components/patterns/SectionPatternGrid';
 
 const GenericPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -57,9 +58,11 @@ const GenericPage: React.FC = () => {
   return (
     <div className="flex flex-col w-full font-sans text-gray-900 fade-in">
       {sections.length > 0 ? (
-        sections.map(section => (
-          <SectionRenderer key={section.id} section={section} />
-        ))
+        <SectionPatternGrid>
+          {sections.map((section) => (
+            <SectionRenderer key={section.id} section={section} />
+          ))}
+        </SectionPatternGrid>
       ) : (
         <div className="py-20 px-6 max-w-4xl mx-auto text-center">
            <h1 className="text-5xl font-serif text-gray-900 mb-6">{page.title}</h1>

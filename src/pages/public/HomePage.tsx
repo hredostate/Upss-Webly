@@ -3,6 +3,7 @@ import { CmsClient } from '../../api/cmsClient';
 import { Section } from '../../types';
 import { SectionRenderer } from '../../components/SectionRenderer';
 import { BrandSpinner } from '../../components/common/BrandSpinner';
+import { SectionPatternGrid } from '../../components/patterns/SectionPatternGrid';
 
 const HomePage: React.FC = () => {
   const [sections, setSections] = useState<Section[]>([]);
@@ -34,9 +35,11 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full font-sans text-gray-900 fade-in">
-      {sections.map(section => (
-        <SectionRenderer key={section.id} section={section} />
-      ))}
+      <SectionPatternGrid>
+        {sections.map((section) => (
+          <SectionRenderer key={section.id} section={section} />
+        ))}
+      </SectionPatternGrid>
     </div>
   );
 };

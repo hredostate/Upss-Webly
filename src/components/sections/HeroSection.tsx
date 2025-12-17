@@ -4,8 +4,56 @@ import { Section } from '../../types';
 import { useReveal } from '../../hooks/useReveal';
 
 export const HeroSection: React.FC<{ section: Section }> = ({ section }) => {
-  const { backgroundImage, primaryCta, secondaryCta } = section.contentJson;
+  const { backgroundImage, primaryCta, secondaryCta, layout } = section.contentJson;
   const { ref, isVisible } = useReveal(0);
+
+  if (layout === 'split') {
+    return (
+      <section ref={ref} className="relative overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-primary-950 text-white py-20 md:py-28">
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute -right-24 -top-24 w-72 h-72 rounded-full bg-white/10 blur-3xl" />
+          <div className="absolute left-10 bottom-0 w-72 h-72 rounded-full bg-primary-400/20 blur-3xl" />
+        </div>
+        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className={`space-y-6 ${isVisible ? 'animate-fade-slide-up' : 'opacity-0 translate-y-6'}`}>
+            <p className="text-xs uppercase tracking-[0.3em] text-primary-100/80 font-bold">UPSS Website Builder</p>
+            <h1 className="text-4xl md:text-5xl font-serif leading-tight">{section.title}</h1>
+            {section.subtitle && (
+              <p className="text-lg text-primary-50/80 leading-relaxed">{section.subtitle}</p>
+            )}
+            <div className="flex flex-col sm:flex-row gap-4">
+              {primaryCta && (
+                <Link
+                  to={primaryCta.link}
+                  className="inline-flex items-center justify-center bg-white text-primary-900 font-bold uppercase tracking-[0.2em] px-8 py-3 rounded shadow-lg hover:-translate-y-1 transition"
+                >
+                  {primaryCta.label}
+                </Link>
+              )}
+              {secondaryCta && (
+                <Link
+                  to={secondaryCta.link}
+                  className="inline-flex items-center justify-center border border-white/70 text-white font-bold uppercase tracking-[0.2em] px-8 py-3 rounded hover:bg-white/10 transition"
+                >
+                  {secondaryCta.label}
+                </Link>
+              )}
+            </div>
+          </div>
+          <div className="relative h-80 md:h-[420px]">
+            <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10">
+              <img
+                src={backgroundImage || 'https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=1200&q=80'}
+                alt="Campus life"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-tr from-primary-900/60 to-transparent" />
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section 
