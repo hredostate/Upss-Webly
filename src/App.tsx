@@ -1,6 +1,6 @@
 
 import React, { Suspense } from 'react';
-import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { AlumniAuthProvider } from './context/AlumniAuthContext';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
