@@ -67,6 +67,10 @@ export const localCmsStore = {
     if (!match) throw new Error('Page not found');
     return match;
   },
+  getPageBySlug: async (slug: string): Promise<Page | null> => {
+    const match = stateRef.current.pages.find((p) => p.slug === slug);
+    return match || null;
+  },
   createPage: async (payload: Partial<Page>): Promise<Page> => {
     const newPage: Page = {
       id: payload.id || nextId('page'),
@@ -148,6 +152,10 @@ export const localCmsStore = {
     const match = stateRef.current.news.find((n) => n.id === id);
     if (!match) throw new Error('News item not found');
     return match;
+  },
+  getNewsBySlug: async (slug: string): Promise<NewsItem | null> => {
+    const match = stateRef.current.news.find((n) => n.slug === slug);
+    return match || null;
   },
   createNewsItem: async (payload: Partial<NewsItem>): Promise<NewsItem> => {
     const newItem: NewsItem = {

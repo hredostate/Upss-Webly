@@ -1,6 +1,7 @@
 
 import { Page, Section, ApiResponse, NewsItem } from '../types';
 import initialPagesWithSections, { getSectionsByPageId } from '../data/cms-seed-data';
+import { localCmsStore } from '../lib/localCmsStore';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api';
 
@@ -43,6 +44,11 @@ export const CmsClient = {
     try {
       return await fetchJson<Page>(`/pages/slug/${slug}`);
     } catch (error) {
+      // Try localCmsStore first
+      const localPage = await localCmsStore.getPageBySlug(slug);
+      if (localPage) return localPage;
+      
+      // Fall back to static seed data as last resort
       const fallback = getFallbackPageBySlug(slug);
       if (fallback) return fallback;
       throw error;
@@ -53,6 +59,11 @@ export const CmsClient = {
     try {
       return await fetchJson<Section[]>(`/pages/${pageId}/sections`);
     } catch (error) {
+      // Try localCmsStore first
+      const localSections = await localCmsStore.getSections(pageId);
+      if (localSections.length > 0) return localSections;
+      
+      // Fall back to static seed data as last resort
       const fallbackSections = getFallbackSectionsForPage(pageId);
       if (fallbackSections.length) return fallbackSections;
       throw error;
@@ -60,14 +71,36 @@ export const CmsClient = {
   },
 
   getNews: async (featured?: boolean, limit?: number): Promise<NewsItem[]> => {
-    const params = new URLSearchParams();
-    if (featured) params.append('featured', 'true');
-    if (limit) params.append('limit', limit.toString());
-    return fetchJson<NewsItem[]>(`/news?${params.toString()}`);
+    try {
+      const params = new URLSearchParams();
+      if (featured) params.append('featured', 'true');
+      if (limit) params.append('limit', limit.toString());
+      return await fetchJson<NewsItem[]>(`/news?${params.toString()}`);
+    } catch (error) {
+      // Try localCmsStore first
+      let localNews = await localCmsStore.getNews();
+      if (featured) {
+        localNews = localNews.filter(item => item.isFeatured);
+      }
+      if (limit) {
+        localNews = localNews.slice(0, limit);
+      }
+      if (localNews.length > 0) return localNews;
+      
+      // Fall back to mock data as last resort
+      return CmsClient.getMockNews();
+    }
   },
 
   getNewsBySlug: async (slug: string): Promise<NewsItem> => {
-    return fetchJson<NewsItem>(`/news/slug/${slug}`);
+    try {
+      return await fetchJson<NewsItem>(`/news/slug/${slug}`);
+    } catch (error) {
+      // Try localCmsStore first
+      const localNews = await localCmsStore.getNewsBySlug(slug);
+      if (localNews) return localNews;
+      throw error;
+    }
   },
   
   // Fallback for when backend isn't running or empty
