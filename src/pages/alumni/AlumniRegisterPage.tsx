@@ -80,6 +80,8 @@ export default function AlumniRegisterPage() {
         first_name: formData.first_name,
         last_name: formData.last_name,
         maiden_name: formData.maiden_name,
+        name_while_enrolled: formData.name_while_enrolled,
+        school_nickname: formData.school_nickname,
         nickname: formData.nickname,
         gender: formData.gender,
         date_of_birth: formData.date_of_birth,
@@ -370,12 +372,40 @@ function BasicInfoStep({ data, update }: any) {
       </div>
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
+          Name while enrolled in UPSS
+        </label>
+        <p className="text-sm text-gray-500 mb-2">
+          If your name was different when you were a student (e.g., maiden name)
+        </p>
+        <input
+          type="text"
+          value={data.name_while_enrolled || ''}
+          onChange={(e) => update({ name_while_enrolled: e.target.value })}
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
           Maiden Name (if applicable)
         </label>
         <input
           type="text"
           value={data.maiden_name || ''}
           onChange={(e) => update({ maiden_name: e.target.value })}
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Nickname in school
+        </label>
+        <p className="text-sm text-gray-500 mb-2">
+          Any nickname you were known by at UPSS
+        </p>
+        <input
+          type="text"
+          value={data.school_nickname || ''}
+          onChange={(e) => update({ school_nickname: e.target.value })}
           className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
         />
       </div>

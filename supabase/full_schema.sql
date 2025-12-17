@@ -142,6 +142,8 @@ CREATE TABLE IF NOT EXISTS alumni_profiles (
   first_name VARCHAR(100) NOT NULL,
   last_name VARCHAR(100) NOT NULL,
   maiden_name VARCHAR(100),
+  name_while_enrolled VARCHAR(200),
+  school_nickname VARCHAR(100),
   nickname VARCHAR(100),
   gender VARCHAR(20),
   date_of_birth DATE,

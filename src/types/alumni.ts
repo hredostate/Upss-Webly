@@ -8,6 +8,8 @@ export interface AlumniProfile {
   first_name: string;
   last_name: string;
   maiden_name?: string;
+  name_while_enrolled?: string;
+  school_nickname?: string;
   nickname?: string;
   gender?: string;
   date_of_birth?: string;
@@ -212,6 +214,8 @@ export interface AlumniRegistrationData {
   first_name: string;
   last_name: string;
   maiden_name?: string;
+  name_while_enrolled?: string;
+  school_nickname?: string;
   nickname?: string;
   gender?: string;
   date_of_birth?: string;
