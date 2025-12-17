@@ -36,9 +36,10 @@ const SiteFooter: React.FC = () => {
               Quick Links
             </h4>
             <ul className="space-y-3 text-sm text-primary-100/90">
-              <li><Link to="/about" className="hover:text-white transition-colors duration-200">Our History</Link></li>
-              <li><Link to="/academics" className="hover:text-white transition-colors duration-200">Academic Calendar</Link></li>
-              <li><Link to="/admissions" className="hover:text-white transition-colors duration-200">Tuition & Fees</Link></li>
+              <li><Link to="/academics" className="hover:text-white transition-colors duration-200">Academics Overview</Link></li>
+              <li><Link to="/junior-secondary" className="hover:text-white transition-colors duration-200">Junior Secondary</Link></li>
+              <li><Link to="/senior-secondary-science" className="hover:text-white transition-colors duration-200">Senior Secondary</Link></li>
+              <li><Link to="/admissions" className="hover:text-white transition-colors duration-200">Admissions & Tuition</Link></li>
               <li><Link to="/contact" className="hover:text-white transition-colors duration-200">Contact Us</Link></li>
               <li><Link to="/news" className="hover:text-white transition-colors duration-200">Latest News</Link></li>
             </ul>
@@ -53,7 +54,7 @@ const SiteFooter: React.FC = () => {
               <li><a href="https://schoolguardian360.com/#Dashboard" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-200">Student Portal</a></li>
               <li><a href="https://schoolguardian360.com/#Dashboard" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-200">Parent Portal</a></li>
               <li><Link to="/alumni" className="hover:text-white transition-colors duration-200">Alumni Network</Link></li>
-              <li><a href="#" className="hover:text-white transition-colors duration-200">Library Catalog</a></li>
+              <li><Link to="/quick-links" className="hover:text-white transition-colors duration-200">Quick Links & Forms</Link></li>
               <li><Link to="/careers" className="hover:text-white transition-colors duration-200">Careers</Link></li>
             </ul>
           </div>
