@@ -8,7 +8,9 @@ CREATE TABLE IF NOT EXISTS alumni_profiles (
   first_name VARCHAR(100) NOT NULL,
   last_name VARCHAR(100) NOT NULL,
   maiden_name VARCHAR(100),
-  nickname VARCHAR(100),
+  name_while_enrolled VARCHAR(200), -- Full name used during time at UPSS (historical)
+  school_nickname VARCHAR(100), -- Nickname known by during time at UPSS
+  nickname VARCHAR(100), -- Current nickname
   gender VARCHAR(20),
   date_of_birth DATE,
   
