@@ -28,15 +28,16 @@ export const FeatureListSection: React.FC<{ section: Section }> = ({ section }) 
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-          {features.map((feature: string | Feature, idx: number) => {
+          {features.map((feature: string | Feature, index: number) => {
             const isObject = typeof feature === 'object' && feature !== null;
-            const title = isObject ? (feature as Feature).title : feature;
-            const description = isObject ? (feature as Feature).description : undefined;
+            const featureObj = isObject ? feature as Feature : null;
+            const title = featureObj ? featureObj.title : feature as string;
+            const description = featureObj?.description;
             
             return (
               <div
-                key={idx}
-                className={`relative overflow-hidden rounded-2xl border border-gray-100 bg-gradient-to-br from-white via-white to-primary-50/60 p-6 shadow-sm hover:-translate-y-1 hover:shadow-md transition-all reveal stagger-${(idx % 3) + 1} ${isVisible ? 'active' : ''}`}
+                key={index}
+                className={`relative overflow-hidden rounded-2xl border border-gray-100 bg-gradient-to-br from-white via-white to-primary-50/60 p-6 shadow-sm hover:-translate-y-1 hover:shadow-md transition-all reveal stagger-${(index % 3) + 1} ${isVisible ? 'active' : ''}`}
               >
                 <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_20%_20%,#c99a1f22,transparent_35%)]" aria-hidden />
                 <div className="relative flex items-start gap-4">
