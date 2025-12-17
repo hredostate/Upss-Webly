@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { JobListingModel } from '../models/JobListingModel';
-import { JobCategoryModel } from '../models/JobCategoryModel';
+import { JobListingModel } from '../models/JobListingModel.js';
+import { JobCategoryModel } from '../models/JobCategoryModel.js';
 
 const sendResponse = (res: Response, data: any = null, error: string | null = null, status = 200) => {
   res.status(status).json({ data, error });

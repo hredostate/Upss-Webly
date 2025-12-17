@@ -1,4 +1,4 @@
-import { query } from './db';
+import { query } from './db.js';
 import { Page, CreatePageDTO } from '../types/cms';
 
 export const PageModel = {

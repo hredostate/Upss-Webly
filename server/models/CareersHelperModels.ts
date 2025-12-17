@@ -1,4 +1,4 @@
-import { query } from './db';
+import { query } from './db.js';
 import { ApplicationStatusHistory } from '../types/careers';
 
 export const ApplicationStatusHistoryModel = {

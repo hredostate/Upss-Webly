@@ -1,13 +1,13 @@
 
 import { Router } from 'express';
-import { PageController } from '../controllers/PageController';
-import { SectionController } from '../controllers/SectionController';
-import { AuthController } from '../controllers/AuthController';
-import { NewsController } from '../controllers/NewsController';
-import { JobController } from '../controllers/JobController';
-import { ApplicationController } from '../controllers/ApplicationController';
-import { ApplicantController } from '../controllers/ApplicantController';
-import { requireAdmin, requireApplicant } from '../middleware/auth';
+import { PageController } from '../controllers/PageController.js';
+import { SectionController } from '../controllers/SectionController.js';
+import { AuthController } from '../controllers/AuthController.js';
+import { NewsController } from '../controllers/NewsController.js';
+import { JobController } from '../controllers/JobController.js';
+import { ApplicationController } from '../controllers/ApplicationController.js';
+import { ApplicantController } from '../controllers/ApplicantController.js';
+import { requireAdmin, requireApplicant } from '../middleware/auth.js';
 
 const router = Router();
 

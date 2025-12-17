@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { JobApplicantModel } from '../models/JobApplicantModel';
-import { SavedJobModel, JobAlertModel } from '../models/CareersHelperModels';
+import { JobApplicantModel } from '../models/JobApplicantModel.js';
+import { SavedJobModel, JobAlertModel } from '../models/CareersHelperModels.js';
 
 const sendResponse = (res: Response, data: any = null, error: string | null = null, status = 200) => {
   res.status(status).json({ data, error });

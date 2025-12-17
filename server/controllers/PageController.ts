@@ -1,6 +1,6 @@
 
 import { Request, Response } from 'express';
-import { PageModel } from '../models/PageModel';
+import { PageModel } from '../models/PageModel.js';
 
 const sendResponse = (res: Response, data: any = null, error: string | null = null, status = 200) => {
   res.status(status).json({ data, error });

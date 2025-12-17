@@ -1,4 +1,4 @@
-import { query } from './db';
+import { query } from './db.js';
 import { JobApplication, CreateJobApplicationDTO, UpdateJobApplicationDTO, ApplicationStatus } from '../types/careers';
 
 export const JobApplicationModel = {

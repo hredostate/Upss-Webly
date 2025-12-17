@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "server": "ts-node server/index.ts",
-    "seed": "ts-node server/scripts/seed.ts",
+    "server": "NODE_OPTIONS='--loader ts-node/esm' ts-node server/index.ts",
+    "seed": "NODE_OPTIONS='--loader ts-node/esm' ts-node server/scripts/seed.ts",
     "start": "node dist/server/index.js"
   },
   "dependencies": {
