@@ -15,6 +15,8 @@ import { FaqSection } from './sections/FaqSection';
 import { TestimonialsSection } from './sections/TestimonialsSection';
 import { ContactFormSection } from './sections/ContactFormSection';
 import { MediaPlaceholder } from './common/MediaPlaceholder';
+import { IntroHeaderSection } from './sections/IntroHeaderSection';
+import { ContentLeadSection } from './sections/ContentLeadSection';
 
 export const SectionRenderer: React.FC<{ section: Section }> = ({ section }) => {
   if (!section.isVisible) return null;
@@ -46,6 +48,10 @@ export const SectionRenderer: React.FC<{ section: Section }> = ({ section }) => 
       return <TestimonialsSection section={section} />;
     case 'CONTACT_FORM':
       return <ContactFormSection section={section} />;
+    case 'INTRO_HEADER':
+      return <IntroHeaderSection section={section} />;
+    case 'CONTENT_LEAD':
+      return <ContentLeadSection section={section} />;
     case 'TEXT_BLOCK': {
       const layout = (section.contentJson as any)?.layout || 'stack';
       const media = (section.contentJson as any)?.mediaPlaceholder as

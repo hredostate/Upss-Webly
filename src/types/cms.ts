@@ -23,6 +23,8 @@ export type SectionType =
   | 'LIST_BLOCK'
   | 'SIGNATURE_BLOCK'
   | 'FEATURE_LIST'
+  | 'INTRO_HEADER'
+  | 'CONTENT_LEAD'
   | 'VIDEO_HERO'
   | 'VIDEO_EMBED'
   | 'VIDEO_GALLERY'

@@ -3,24 +3,41 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CmsClient } from '../../api/cmsClient';
 import { NewsItem } from '../../types';
-import { BrandSpinner } from '../../components/common/BrandSpinner';
+import { NewsListSkeleton } from '../../components/skeletons/NewsSkeletons';
 
 export default function NewsIndex() {
-  const [news, setNews] = useState<NewsItem[]>([]);
-  const [loading, setLoading] = useState(true);
+  const cached = (() => {
+    const stored = sessionStorage.getItem('upss-news');
+    if (stored) {
+      try {
+        return JSON.parse(stored) as NewsItem[];
+      } catch (err) {
+        console.warn('Unable to hydrate cached news', err);
+      }
+    }
+    return [] as NewsItem[];
+  })();
+
+  const [news, setNews] = useState<NewsItem[]>(cached);
+  const [loading, setLoading] = useState(() => cached.length === 0);
 
   useEffect(() => {
     CmsClient.getNews()
-      .then(setNews)
+      .then((items) => {
+        setNews(items);
+        sessionStorage.setItem('upss-news', JSON.stringify(items));
+      })
       .catch((err) => {
         console.error("Failed to load news, using mock", err);
-        setNews(CmsClient.getMockNews());
+        const mocks = CmsClient.getMockNews();
+        setNews(mocks);
+        sessionStorage.setItem('upss-news', JSON.stringify(mocks));
       })
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) {
-    return <BrandSpinner fullscreen label="Loading stories" />;
+  if (loading && news.length === 0) {
+    return <NewsListSkeleton />;
   }
 
   return (

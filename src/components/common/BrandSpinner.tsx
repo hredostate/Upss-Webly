@@ -1,10 +1,12 @@
 import React from 'react';
+import { useDelayedVisibility } from '../../hooks/useDelayedVisibility';
 import { BRAND_MARK_URL } from '../../config/branding';
 
 interface BrandSpinnerProps {
   label?: string;
   fullscreen?: boolean;
   size?: 'sm' | 'md' | 'lg';
+  delayMs?: number;
 }
 
 const SIZE_CLASSES: Record<NonNullable<BrandSpinnerProps['size']>, string> = {
@@ -16,8 +18,13 @@ const SIZE_CLASSES: Record<NonNullable<BrandSpinnerProps['size']>, string> = {
 export const BrandSpinner: React.FC<BrandSpinnerProps> = ({
   label = 'Loading',
   fullscreen = false,
-  size = 'md'
+  size = 'md',
+  delayMs = 180
 }) => {
+  const shouldRender = useDelayedVisibility(delayMs, true);
+
+  if (!shouldRender) return null;
+
   return (
     <div
       className={`flex flex-col items-center justify-center gap-4 ${
