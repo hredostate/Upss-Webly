@@ -17,11 +17,11 @@ export function PatternedSection({ variant, index, children }: PatternedSectionP
   const variantClass = variantClassMap[variant];
 
   return (
-    <section className={`${variantClass} py-16 md:py-24`}> 
+    <section className={`${variantClass} py-16 md:py-24`}>
       {variant === 'angled' && (
         <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-primary-50/60 to-transparent" />
       )}
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6">
         <div
           className={`transition-all duration-500 ${
             index % 2 === 0 ? 'md:-translate-y-2 md:translate-x-1' : 'md:translate-y-2 md:-translate-x-1'

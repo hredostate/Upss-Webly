@@ -122,6 +122,49 @@ export const CmsClient = {
         title: 'News & Events',
         subtitle: 'Recent highlights from our vibrant community.',
         contentJson: { limit: 3 }
+      },
+      {
+        id: '6', pageId: 'home', type: 'FEATURE_LIST', orderIndex: 5, isVisible: true,
+        title: 'Why families choose UPSS',
+        subtitle: 'Grounded in heritage, engineered for the future.',
+        contentJson: {
+          features: [
+            { title: 'Adaptive teaching', description: 'Personalized pathways, responsive feedback, and supportive tutoring.', icon: 'academic-cap' },
+            { title: 'Future skills', description: 'Robotics, research labs, digital fluency, and purposeful innovation.', icon: 'sparkles' },
+            { title: 'Whole child', description: 'Advisory system, wellness supports, and leadership coaching.', icon: 'heart' },
+            { title: 'Global network', description: 'Alumni mentors, partner schools, and international competitions.', icon: 'globe-alt' }
+          ]
+        }
+      },
+      {
+        id: '7', pageId: 'home', type: 'TESTIMONIALS', orderIndex: 6, isVisible: true,
+        title: 'Voices from the UPSS community',
+        contentJson: {
+          testimonials: [
+            { quote: 'UPSS prepared me to thrive at university and lead with confidence.', name: 'Abeni, Class of 2018', role: 'Engineering student', avatar: '' },
+            { quote: 'The teachers demand excellence while making every child feel seen.', name: 'Mrs. Uche', role: 'Parent', avatar: '' }
+          ]
+        }
+      },
+      {
+        id: '8', pageId: 'home', type: 'FAQ', orderIndex: 7, isVisible: true,
+        title: 'Quick answers for families',
+        contentJson: {
+          faqs: [
+            { question: 'How do I apply?', answer: 'Begin with the admissions form, then schedule an assessment and campus tour.' },
+            { question: 'Do you offer boarding?', answer: 'Yes, we provide structured boarding with dedicated house parents and study support.' },
+            { question: 'What co-curriculars are available?', answer: 'From robotics to debate, coding, arts, sports, and entrepreneurship clubs.' }
+          ]
+        }
+      },
+      {
+        id: '9', pageId: 'home', type: 'CTA_BANNER', orderIndex: 8, isVisible: true,
+        title: 'Ready to experience UPSS?',
+        subtitle: 'Schedule a visit or speak with our admissions team to learn more.',
+        contentJson: {
+          primaryCta: { label: 'Book a tour', link: '/contact' },
+          secondaryCta: { label: 'Start application', link: '/admissions' }
+        }
       }
     ];
   },

@@ -36,6 +36,7 @@ export const SectionForm: React.FC<SectionFormProps> = ({ initialData, onSave, o
   });
 
   const [contentFields, setContentFields] = useState<any>(formData.contentJson || {});
+  const [validationError, setValidationError] = useState('');
 
   useEffect(() => {
     setFormData(prev => ({ ...prev, contentJson: contentFields }));
@@ -52,7 +53,23 @@ export const SectionForm: React.FC<SectionFormProps> = ({ initialData, onSave, o
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSave(formData);
+    if (!formData.type) {
+      setValidationError('Please select a section type.');
+      return;
+    }
+
+    if (!formData.title && formData.type !== 'NEWS_LIST') {
+      setValidationError('A section title is required for this block.');
+      return;
+    }
+
+    if (formData.type === 'HERO' && !contentFields.backgroundImage) {
+      setValidationError('Hero sections need a background image to render correctly.');
+      return;
+    }
+
+    setValidationError('');
+    onSave({ ...formData, contentJson: contentFields || {} });
   };
 
   // --- Type Specific Fields ---
@@ -748,6 +765,12 @@ export const SectionForm: React.FC<SectionFormProps> = ({ initialData, onSave, o
           onContentChange={handleContentChange}
           onFieldChange={(field, value) => setFormData(prev => ({ ...prev, [field]: value }))}
         />
+      )}
+
+      {validationError && (
+        <div className="mt-6 p-3 rounded border border-red-200 bg-red-50 text-red-700 text-sm" role="alert">
+          {validationError}
+        </div>
       )}
 
       <div className="flex justify-end gap-3 pt-6 border-t border-gray-200">
