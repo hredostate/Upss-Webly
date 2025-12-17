@@ -5,6 +5,12 @@ export const useReveal = (threshold = 0.1) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    // Validate and clamp threshold to valid range [0, 1]
+    const numThreshold = Number(threshold);
+    const validThreshold = Number.isNaN(numThreshold) 
+      ? 0.1 
+      : Math.min(1, Math.max(0, numThreshold));
+    
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -12,7 +18,7 @@ export const useReveal = (threshold = 0.1) => {
           observer.unobserve(entry.target);
         }
       },
-      { threshold }
+      { threshold: validThreshold }
     );
 
     if (ref.current) {

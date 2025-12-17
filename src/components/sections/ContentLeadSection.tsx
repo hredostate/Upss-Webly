@@ -4,7 +4,7 @@ import { useReveal } from '../../hooks/useReveal';
 import { MediaPlaceholder } from '../common/MediaPlaceholder';
 
 export function ContentLeadSection({ section }: { section: Section }) {
-  const { ref, isVisible } = useReveal(50);
+  const { ref, isVisible } = useReveal(0.5);
   const layout = (section.contentJson as any)?.layout === 'split' ? 'split' : 'stack';
   const media = (section.contentJson as any)?.mediaPlaceholder as
     | { label?: string; type?: 'image' | 'video'; aspect?: 'wide' | 'square' }
