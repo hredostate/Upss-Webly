@@ -7,7 +7,7 @@ export const VideoHeroSection: React.FC<{ section: Section }> = ({ section }) =>
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
   
-  const content = section.contentJson as VideoHeroContent;
+  const content = (section.contentJson || {}) as VideoHeroContent;
   const {
     videoUrl,
     posterImage,
