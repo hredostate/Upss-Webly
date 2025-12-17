@@ -19,7 +19,7 @@ export const VideoHeroSection: React.FC<{ section: Section }> = ({ section }) =>
     subtitle,
     primaryCta,
     secondaryCta
-  } = content || {};
+  } = content;
 
   const togglePlay = () => {
     if (videoRef.current) {
