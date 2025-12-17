@@ -1,6 +1,6 @@
 import { Page, Section, NewsItem } from '../types';
 import initialPagesWithSections, { getSectionsByPageId } from '../data/cms-seed-data';
-import { CmsClient } from '../api/cmsClient';
+import { mockNewsData } from '../data/mock-news';
 
 type LocalCmsState = {
   pages: Page[];
@@ -27,7 +27,7 @@ const seedState = (): LocalCmsState => {
   return {
     pages,
     sections,
-    news: CmsClient.getMockNews(),
+    news: mockNewsData,
   };
 };
 
@@ -66,6 +66,10 @@ export const localCmsStore = {
     const match = stateRef.current.pages.find((p) => p.id === id);
     if (!match) throw new Error('Page not found');
     return match;
+  },
+  getPageBySlug: async (slug: string): Promise<Page | null> => {
+    const match = stateRef.current.pages.find((p) => p.slug === slug);
+    return match || null;
   },
   createPage: async (payload: Partial<Page>): Promise<Page> => {
     const newPage: Page = {
@@ -148,6 +152,10 @@ export const localCmsStore = {
     const match = stateRef.current.news.find((n) => n.id === id);
     if (!match) throw new Error('News item not found');
     return match;
+  },
+  getNewsBySlug: async (slug: string): Promise<NewsItem | null> => {
+    const match = stateRef.current.news.find((n) => n.slug === slug);
+    return match || null;
   },
   createNewsItem: async (payload: Partial<NewsItem>): Promise<NewsItem> => {
     const newItem: NewsItem = {

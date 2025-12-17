@@ -1,6 +1,8 @@
 
 import { Page, Section, ApiResponse, NewsItem } from '../types';
 import initialPagesWithSections, { getSectionsByPageId } from '../data/cms-seed-data';
+import { localCmsStore } from '../lib/localCmsStore';
+import { mockNewsData } from '../data/mock-news';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api';
 
@@ -43,6 +45,11 @@ export const CmsClient = {
     try {
       return await fetchJson<Page>(`/pages/slug/${slug}`);
     } catch (error) {
+      // Try localCmsStore first
+      const localPage = await localCmsStore.getPageBySlug(slug);
+      if (localPage) return localPage;
+      
+      // Fall back to static seed data as last resort
       const fallback = getFallbackPageBySlug(slug);
       if (fallback) return fallback;
       throw error;
@@ -53,21 +60,40 @@ export const CmsClient = {
     try {
       return await fetchJson<Section[]>(`/pages/${pageId}/sections`);
     } catch (error) {
-      const fallbackSections = getFallbackSectionsForPage(pageId);
-      if (fallbackSections.length) return fallbackSections;
-      throw error;
+      // Try localCmsStore first - empty array is a valid response
+      const localSections = await localCmsStore.getSections(pageId);
+      return localSections;
     }
   },
 
   getNews: async (featured?: boolean, limit?: number): Promise<NewsItem[]> => {
-    const params = new URLSearchParams();
-    if (featured) params.append('featured', 'true');
-    if (limit) params.append('limit', limit.toString());
-    return fetchJson<NewsItem[]>(`/news?${params.toString()}`);
+    try {
+      const params = new URLSearchParams();
+      if (featured) params.append('featured', 'true');
+      if (limit) params.append('limit', limit.toString());
+      return await fetchJson<NewsItem[]>(`/news?${params.toString()}`);
+    } catch (error) {
+      // Try localCmsStore - it's seeded with mockNewsData on initialization
+      let localNews = await localCmsStore.getNews();
+      if (featured) {
+        localNews = localNews.filter(item => item.isFeatured);
+      }
+      if (limit) {
+        localNews = localNews.slice(0, limit);
+      }
+      return localNews;
+    }
   },
 
   getNewsBySlug: async (slug: string): Promise<NewsItem> => {
-    return fetchJson<NewsItem>(`/news/slug/${slug}`);
+    try {
+      return await fetchJson<NewsItem>(`/news/slug/${slug}`);
+    } catch (error) {
+      // Try localCmsStore first
+      const localNews = await localCmsStore.getNewsBySlug(slug);
+      if (localNews) return localNews;
+      throw error;
+    }
   },
   
   // Fallback for when backend isn't running or empty
@@ -170,37 +196,6 @@ export const CmsClient = {
   },
 
   getMockNews: (): NewsItem[] => {
-    return [
-      {
-        id: '1',
-        title: 'UPSS Robotics Team Wins National Championship',
-        slug: 'robotics-team-wins-national',
-        publishedDate: '2023-10-12',
-        category: 'Achievement',
-        summary: 'Our senior robotics team took home the gold medal in Lagos this weekend, qualifying for the international finals in Tokyo.',
-        body: 'Full article content here...',
-        isFeatured: true
-      },
-      {
-        id: '2',
-        title: 'Annual "Knowledge for Service" Symposium',
-        slug: 'knowledge-symposium',
-        publishedDate: '2023-11-05',
-        category: 'Events',
-        summary: 'Join us for a day of lectures and workshops featuring distinguished alumni and industry leaders.',
-        body: 'Full article content here...',
-        isFeatured: true
-      },
-      {
-        id: '3',
-        title: 'Admissions for 2024/2025 Session Now Open',
-        slug: 'admissions-2024-open',
-        publishedDate: '2023-09-15',
-        category: 'Admissions',
-        summary: 'Prospective parents are invited to apply. Entrance examinations are scheduled to begin in January.',
-        body: 'Full article content here...',
-        isFeatured: true
-      }
-    ] as NewsItem[];
+    return mockNewsData;
   }
 };
