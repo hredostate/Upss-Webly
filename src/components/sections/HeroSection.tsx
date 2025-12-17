@@ -4,7 +4,7 @@ import { Section } from '../../types';
 import { useReveal } from '../../hooks/useReveal';
 
 export const HeroSection: React.FC<{ section: Section }> = ({ section }) => {
-  const { backgroundImage, primaryCta, secondaryCta, layout } = section.contentJson;
+  const { backgroundImage, primaryCta, secondaryCta, layout } = section.contentJson || {};
   const { ref, isVisible } = useReveal(0);
 
   if (layout === 'split') {
