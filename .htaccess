@@ -35,11 +35,9 @@ AddDefaultCharset UTF-8
 
 # Prevent access to sensitive files
 <FilesMatch "^\.">
-  Order allow,deny
-  Deny from all
+  Require all denied
 </FilesMatch>
 
 <FilesMatch "\.(env|log|md)$">
-  Order allow,deny
-  Deny from all
+  Require all denied
 </FilesMatch>
