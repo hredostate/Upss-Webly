@@ -1,35 +1,50 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { CmsClient } from '../../api/cmsClient';
 import { Page, Section } from '../../types';
 import { SectionRenderer } from '../../components/SectionRenderer';
-import { BrandSpinner } from '../../components/common/BrandSpinner';
 import { SectionPatternGrid } from '../../components/patterns/SectionPatternGrid';
+import { SectionsScaffold } from '../../components/skeletons/SectionSkeleton';
+import { normalizeSections } from '../../lib/normalizeSections';
 
 const GenericPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [page, setPage] = useState<Page | null>(null);
-  const [sections, setSections] = useState<Section[]>([]);
-  const [loading, setLoading] = useState(true);
+  const cached = (() => {
+    if (!slug) return null;
+    const stored = sessionStorage.getItem(`upss-page-${slug}`);
+    if (stored) {
+      try {
+        return JSON.parse(stored) as { page: Page; sections: Section[] };
+      } catch (err) {
+        console.warn('Unable to restore cached page', err);
+      }
+    }
+    return null;
+  })();
+
+  const [page, setPage] = useState<Page | null>(cached?.page ?? null);
+  const [sections, setSections] = useState<Section[]>(cached?.sections ?? []);
+  const [loading, setLoading] = useState(() => !cached);
   const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
     const loadPage = async () => {
       if (!slug) return;
-      
-      setLoading(true);
+
+      setLoading(sections.length === 0);
       setError(false);
       
       try {
         const pageData = await CmsClient.getPageBySlug(slug);
         setPage(pageData);
-        
+
         // Update document title
         document.title = pageData.seoTitle || `${pageData.title} | UPSS Benin City`;
-        
+
         const sectionsData = await CmsClient.getSectionsForPage(pageData.id);
         setSections(sectionsData);
+        sessionStorage.setItem(`upss-page-${slug}`, JSON.stringify({ page: pageData, sections: sectionsData }));
       } catch (err) {
         console.error(`Failed to load page: ${slug}`, err);
         setError(true);
@@ -41,9 +56,7 @@ const GenericPage: React.FC = () => {
     loadPage();
   }, [slug]);
 
-  if (loading) {
-    return <BrandSpinner fullscreen={false} label="Loading page" />;
-  }
+  const normalized = useMemo(() => normalizeSections(sections), [sections]);
 
   if (error || !page) {
     return (
@@ -57,9 +70,11 @@ const GenericPage: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full font-sans text-gray-900 fade-in">
-      {sections.length > 0 ? (
+      {loading && sections.length === 0 ? (
+        <SectionsScaffold />
+      ) : sections.length > 0 ? (
         <SectionPatternGrid>
-          {sections.map((section) => (
+          {normalized.map((section) => (
             <SectionRenderer key={section.id} section={section} />
           ))}
         </SectionPatternGrid>

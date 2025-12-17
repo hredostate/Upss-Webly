@@ -3,30 +3,49 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { CmsClient } from '../../api/cmsClient';
 import { NewsItem } from '../../types';
-import { BrandSpinner } from '../../components/common/BrandSpinner';
+import { ArticleSkeleton } from '../../components/skeletons/NewsSkeletons';
 
 export default function NewsDetail() {
   const { slug } = useParams<{ slug: string }>();
-  const [article, setArticle] = useState<NewsItem | null>(null);
-  const [loading, setLoading] = useState(true);
+  const cached = (() => {
+    if (!slug) return null;
+    const stored = sessionStorage.getItem(`upss-news-${slug}`);
+    if (stored) {
+      try {
+        return JSON.parse(stored) as NewsItem;
+      } catch (err) {
+        console.warn('Unable to hydrate cached article', err);
+      }
+    }
+    return null;
+  })();
+
+  const [article, setArticle] = useState<NewsItem | null>(cached);
+  const [loading, setLoading] = useState(() => !cached);
   const [error, setError] = useState('');
 
   useEffect(() => {
     if (slug) {
       CmsClient.getNewsBySlug(slug)
-        .then(setArticle)
+        .then((articleData) => {
+          setArticle(articleData);
+          sessionStorage.setItem(`upss-news-${slug}`, JSON.stringify(articleData));
+        })
         .catch(() => {
           // Mock data fallback check
           const mocks = CmsClient.getMockNews();
           const found = mocks.find(n => n.slug === slug);
-          if (found) setArticle(found);
+          if (found) {
+            setArticle(found);
+            sessionStorage.setItem(`upss-news-${slug}`, JSON.stringify(found));
+          }
           else setError("Article not found");
         })
         .finally(() => setLoading(false));
     }
   }, [slug]);
 
-  if (loading) return <BrandSpinner fullscreen label="Loading article" />;
+  if (loading && !article) return <ArticleSkeleton />;
   if (error || !article) return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
       <h1 className="text-2xl font-serif text-gray-900 mb-4">Article Not Found</h1>
