@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { AlumniAuthProvider } from './context/AlumniAuthContext';
@@ -48,6 +48,7 @@ import MyApplications from './pages/careers/MyApplications';
 import ApplicationDetail from './pages/careers/ApplicationDetail';
 import ApplyForJob from './pages/careers/ApplyForJob';
 import { ScrollRestoration } from './components/navigation/ScrollRestoration';
+import { PageFallback } from './components/common/PageFallback';
 
 export default function App() {
   return (
@@ -55,7 +56,8 @@ export default function App() {
       <AlumniAuthProvider>
         <Router>
           <ScrollRestoration />
-          <Routes>
+          <Suspense fallback={<PageFallback label="Loading page" />}>
+            <Routes>
             {/* Public Routes using MainLayout */}
             <Route path="/" element={<MainLayout />}>
               <Route index element={<HomePage />} />
@@ -139,7 +141,8 @@ export default function App() {
 
             {/* Catch all */}
             <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
+            </Routes>
+          </Suspense>
         </Router>
       </AlumniAuthProvider>
     </AuthProvider>

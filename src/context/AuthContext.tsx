@@ -19,6 +19,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isSupabaseConfigured) {
@@ -32,18 +33,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }: { data: { session: Session | null } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
+    const hydrate = async () => {
+      try {
+        const { data, error } = await supabase.auth.getSession();
+        if (error) throw error;
+        setSession(data.session);
+        setUser(data.session?.user ?? null);
+      } catch (err: any) {
+        setError(err?.message || 'Failed to restore session');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    // Listen for auth changes
+    hydrate();
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event: string, session: Session | null) => {
-        setSession(session);
-        setUser(session?.user ?? null);
+      (_event: string, nextSession: Session | null) => {
+        setSession(nextSession);
+        setUser(nextSession?.user ?? null);
         setLoading(false);
       }
     );
@@ -67,8 +75,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return { error: { message: 'Invalid credentials. Use the demo admin login provided.' } as AuthError };
     }
 
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    return { error };
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+
+      setSession(data.session);
+      setUser(data.user);
+      setError(null);
+      return { error: null };
+    } catch (err: any) {
+      setError(err?.message || 'Unable to sign in');
+      return { error: err as AuthError };
+    }
   };
 
   const signOut = async () => {
@@ -83,6 +101,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider value={{ user, session, loading, signIn, signOut }}>
+      {error && import.meta.env.DEV && (
+        <div className="bg-amber-100 text-amber-900 px-4 py-2 text-sm text-center">
+          {error}
+        </div>
+      )}
       {children}
     </AuthContext.Provider>
   );
