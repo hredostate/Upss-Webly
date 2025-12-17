@@ -9,7 +9,11 @@ export const HeroSection: React.FC<{ section: Section }> = ({ section }) => {
 
   if (layout === 'split') {
     return (
-      <section ref={ref} className="relative overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-primary-950 text-white py-20 md:py-28">
+      <section
+        ref={ref}
+        data-full-bleed
+        className="relative overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-primary-950 text-white py-20 md:py-28"
+      >
         <div className="absolute inset-0 opacity-30">
           <div className="absolute -right-24 -top-24 w-72 h-72 rounded-full bg-white/10 blur-3xl" />
           <div className="absolute left-10 bottom-0 w-72 h-72 rounded-full bg-primary-400/20 blur-3xl" />
@@ -56,9 +60,10 @@ export const HeroSection: React.FC<{ section: Section }> = ({ section }) => {
   }
 
   return (
-    <section 
+    <section
       ref={ref}
       className="hero h-[90vh] min-h-[700px] flex items-center justify-center"
+      data-full-bleed
       aria-label={section.title}
     >
       {/* Background with continuous slow zoom */}
