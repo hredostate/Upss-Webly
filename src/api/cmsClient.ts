@@ -73,7 +73,7 @@ export const CmsClient = {
       if (limit) params.append('limit', limit.toString());
       return await fetchJson<NewsItem[]>(`/news?${params.toString()}`);
     } catch (error) {
-      // Try localCmsStore first
+      // Try localCmsStore - it's seeded with mockNewsData on initialization
       let localNews = await localCmsStore.getNews();
       if (featured) {
         localNews = localNews.filter(item => item.isFeatured);
@@ -81,10 +81,7 @@ export const CmsClient = {
       if (limit) {
         localNews = localNews.slice(0, limit);
       }
-      if (localNews.length > 0) return localNews;
-      
-      // Fall back to mock data as last resort
-      return CmsClient.getMockNews();
+      return localNews;
     }
   },
 
