@@ -25,9 +25,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!isSupabaseConfigured) {
       const stored = localStorage.getItem('upss-demo-admin');
       if (stored) {
-        const parsed = JSON.parse(stored);
-        setUser(parsed);
-        setSession({} as Session);
+        try {
+          const parsed = JSON.parse(stored);
+          setUser(parsed);
+          setSession({} as Session);
+        } catch (err: any) {
+          console.warn('Unable to parse stored admin session', err);
+          localStorage.removeItem('upss-demo-admin');
+        }
       }
       setLoading(false);
       return;

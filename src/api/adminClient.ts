@@ -2,11 +2,26 @@ import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { Page, Section, NewsItem } from '../types';
 import { localCmsStore } from '../lib/localCmsStore';
 
+const demoAdminUser = {
+  id: 'demo-admin',
+  email: import.meta.env.VITE_DEMO_ADMIN_EMAIL || 'admin@upss.edu.ng',
+};
+
 export const AdminClient = {
   // --- Auth (legacy admin panel) ---
   login: async (email: string, password: string) => {
     if (!isSupabaseConfigured) {
-      throw new Error('Supabase is not configured. Using local admin fallback.');
+      if (
+        email === (import.meta.env.VITE_DEMO_ADMIN_EMAIL || 'admin@upss.edu.ng') &&
+        password === (import.meta.env.VITE_DEMO_ADMIN_PASSWORD || 'upssdemo123')
+      ) {
+        return {
+          token: 'demo-admin-token',
+          user: demoAdminUser as any,
+        };
+      }
+
+      throw new Error('Supabase is not configured. Use the provided demo admin credentials.');
     }
 
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
@@ -171,6 +186,25 @@ export const AdminClient = {
 
   // --- Media ---
   getMedia: async (): Promise<any[]> => {
+    if (!isSupabaseConfigured) {
+      return [
+        {
+          id: 'demo-hero',
+          url: 'https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d',
+          title: 'Campus life (demo)',
+          type: 'image',
+          created_at: new Date().toISOString(),
+        },
+        {
+          id: 'demo-lab',
+          url: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b',
+          title: 'STEM lab (demo)',
+          type: 'image',
+          created_at: new Date().toISOString(),
+        },
+      ];
+    }
+
     const { data, error } = await supabase
       .from('media')
       .select('*')
