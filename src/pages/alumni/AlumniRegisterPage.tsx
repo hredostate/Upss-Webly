@@ -375,7 +375,7 @@ function BasicInfoStep({ data, update }: any) {
           Name while enrolled in UPSS
         </label>
         <p className="text-sm text-gray-500 mb-2">
-          If your name was different when you were a student (e.g., maiden name)
+          If your name was different when you were a student (e.g., before marriage, legal name change, etc.)
         </p>
         <input
           type="text"
